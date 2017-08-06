@@ -48,12 +48,12 @@ public class TravelResourceController extends BaseController{
     @ResponseBody
     public ResponseEntity findTravelResourceItemByTravelSiteId(String travelSiteIdsJson){
         List<Integer> travelSiteIds = JSON.parseArray(travelSiteIdsJson, Integer.class);
-        Map<Integer, List<TravelResourceItemVO>> map = new HashMap<>();
+        List<TravelResourceItemVO> travelResourceItemVOListTotal = new ArrayList<>();
         for(Integer travelSiteId : travelSiteIds){
             List<TravelResourceItemVO> travelResourceItemVOList = travelResourceService.findTravelResourceItemVOByTravelSiteId(travelSiteId);
-            map.put(travelSiteId,travelResourceItemVOList);
+            travelResourceItemVOListTotal.addAll(travelResourceItemVOList);
         }
-        return this.returnSuccessMsg(map);
+        return this.returnSuccessMsg(travelResourceItemVOListTotal);
     }
 
 //    @RequestMapping(value = "/buildTempTravelPlan", method = RequestMethod.POST)

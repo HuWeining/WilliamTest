@@ -20,7 +20,7 @@ public class TravelResourceItemVO {
 
     private Integer price;
 
-    private Integer travelSiteId;
+    private String travelSiteName;
 
     /**
      * area 0000001, 0000010, 0000100, 0001000, 0010000, 0100000,   1000000 represent the area
@@ -98,12 +98,12 @@ public class TravelResourceItemVO {
         this.price = price;
     }
 
-    public Integer getTravelSiteId() {
-        return travelSiteId;
+    public String getTravelSiteName() {
+        return travelSiteName;
     }
 
-    public void setTravelSiteId(Integer travelSiteId) {
-        this.travelSiteId = travelSiteId;
+    public void setTravelSiteName(String travelSiteName) {
+        this.travelSiteName = travelSiteName;
     }
 
     public List<String> getArea() {
@@ -153,22 +153,22 @@ public class TravelResourceItemVO {
                 if((code&1) == 1){
                     list.add("Japan");
                 }
-                if((code&3) == 1){
+                if((code&2) == 2){
                     list.add("SE Asia");
                 }
-                if((code&7) == 1){
+                if((code&4) == 4){
                     list.add("China");
                 }
-                if((code&15) == 1){
+                if((code&8) == 8){
                     list.add("Europe");
                 }
-                if((code&31) == 1){
+                if((code&16) == 16){
                     list.add("America");
                 }
-                if((code&63) == 1){
+                if((code&32) == 32){
                     list.add("Australia");
                 }
-                if((code&127) == 1){
+                if((code&64) == 64){
                     list.add("Africa");
                 }
                 break;
@@ -176,22 +176,22 @@ public class TravelResourceItemVO {
                 if((code&1) == 1){
                     list.add("island");
                 }
-                if((code&3) == 1){
+                if((code&2) == 2){
                     list.add("mountain");
                 }
-                if((code&7) == 1){
+                if((code&4) == 4){
                     list.add("prairie");
                 }
-                if((code&15) == 1){
+                if((code&8) == 8){
                     list.add("Sea/Ocean");
                 }
-                if((code&31) == 1){
+                if((code&16) == 16){
                     list.add("desert");
                 }
-                if((code&63) == 1){
+                if((code&32) == 32){
                     list.add("urban");
                 }
-                if((code&127) == 1){
+                if((code&64) == 64){
                     list.add("remote area");
                 }
                 break;
@@ -199,13 +199,13 @@ public class TravelResourceItemVO {
                 if((code&1) == 1){
                     list.add("spring");
                 }
-                if((code&3) == 1){
+                if((code&2) == 2){
                     list.add("summer");
                 }
-                if((code&7) == 1){
+                if((code&4) == 4){
                     list.add("autumn");
                 }
-                if((code&15) == 1){
+                if((code&8) == 8){
                     list.add("winter");
                 }
                 break;
@@ -213,13 +213,13 @@ public class TravelResourceItemVO {
                 if((code&1) == 1){
                     list.add("child");
                 }
-                if((code&3) == 1){
+                if((code&2) == 2){
                     list.add("young");
                 }
-                if((code&7) == 1){
+                if((code&4) == 4){
                     list.add("middle-aged");
                 }
-                if((code&15) == 1){
+                if((code&8) == 8){
                     list.add("elderly");
                 }
                 break;
@@ -227,22 +227,22 @@ public class TravelResourceItemVO {
                 if((code&1) == 1){
                     list.add("historical");
                 }
-                if((code&3) == 1){
+                if((code&2) == 2){
                     list.add("museum");
                 }
-                if((code&7) == 1){
+                if((code&4) == 4){
                     list.add("religion");
                 }
-                if((code&15) == 1){
+                if((code&8) == 8){
                     list.add("festival");
                 }
-                if((code&31) == 1){
+                if((code&16) == 16){
                     list.add("nature");
                 }
-                if((code&63) == 1){
+                if((code&32) == 32){
                     list.add("animal");
                 }
-                if((code&127) == 1){
+                if((code&64) == 64){
                     list.add("building");
                 }
                 break;

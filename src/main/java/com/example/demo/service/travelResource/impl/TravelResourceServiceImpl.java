@@ -88,7 +88,7 @@ public class TravelResourceServiceImpl implements TravelResourceService {
         travelResourceItemVO.setDescription(travelResourceItem.getDescription());
         travelResourceItemVO.setCost(travelResourceItem.getCost());
         travelResourceItemVO.setPrice(travelResourceItem.getPrice());
-        travelResourceItemVO.setTravelSiteId(travelResourceItem.getTravelSiteId());
+        travelResourceItemVO.setTravelSiteName(travelSiteRepository.findOne(travelResourceItem.getTravelSiteId()).getSiteName());
         travelResourceItemVO.setArea(TravelResourceItemVO.getStringFromCode(travelResourceItem.getArea(), RecommendationConstant.TRAVEL_RESOURCE_ITEM_FIELD_TYPE_AREA));
         travelResourceItemVO.setScene(TravelResourceItemVO.getStringFromCode(travelResourceItem.getScene(),RecommendationConstant.TRAVEL_RESOURCE_ITEM_FIELD_TYPE_SCENE));
         travelResourceItemVO.setSeason(TravelResourceItemVO.getStringFromCode(travelResourceItem.getSeason(),RecommendationConstant.TRAVEL_RESOURCE_ITEM_FIELD_TYPE_SEASON));
