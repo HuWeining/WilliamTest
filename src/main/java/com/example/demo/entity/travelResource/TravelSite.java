@@ -1,4 +1,4 @@
-package com.example.demo.entity.TravelResource;
+package com.example.demo.entity.travelResource;
 
 import javax.persistence.*;
 

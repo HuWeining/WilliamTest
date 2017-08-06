@@ -6,7 +6,7 @@
 // * Created by huweining on 2017/8/10.
 // */
 //
-//public abstract class TravelResource {
+//public abstract class travelResource {
 //    @Id
 //    @Column(name = "ID")
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)

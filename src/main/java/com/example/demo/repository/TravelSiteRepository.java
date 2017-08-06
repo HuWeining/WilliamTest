@@ -1,7 +1,6 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.Guest;
-import com.example.demo.entity.TravelResource.TravelSite;
+import com.example.demo.entity.travelResource.TravelSite;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,14 +1,17 @@
-package com.example.demo.entity.TravelResource;
+package com.example.demo.entity.travelResource;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * Created by huweining on 2017/8/10.
  */
+
+/**
+ * this table is for the build of new travel plan
+ */
 @Entity
-@Table(name = "TRAVEL_SITE_AND_ITEM")
-public class TravelSiteAndItem {
+@Table(name = "TRAVEL_SITE_BINDING_ITEM_TEMP")
+public class TravelSiteBindingItemTemp {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,8 +20,11 @@ public class TravelSiteAndItem {
     @Column(name = "TRAVEL_SITE_ID")
     Integer travelSiteId;
 
+    /**
+     * TRAVEL_RESOURCE_ITEM_ID EXAMPLE: [1,2,5,6,12]
+     */
     @Column(name = "TRAVEL_RESOURCE_ITEM_IDS")
-    List<Integer> travelResourceItemIds;
+    String travelResourceItemIds;
 
     public Integer getId() {
         return id;
@@ -36,11 +42,11 @@ public class TravelSiteAndItem {
         this.travelSiteId = travelSiteId;
     }
 
-    public List<Integer> getTravelResourceItemIds() {
+    public String getTravelResourceItemIds() {
         return travelResourceItemIds;
     }
 
-    public void setTravelResourceItemIds(List<Integer> travelResourceItemIds) {
+    public void setTravelResourceItemIds(String travelResourceItemIds) {
         this.travelResourceItemIds = travelResourceItemIds;
     }
 }

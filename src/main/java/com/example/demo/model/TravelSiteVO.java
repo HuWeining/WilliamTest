@@ -7,13 +7,33 @@ import java.util.List;
  */
 public class TravelSiteVO {
 
-    List<TravelResourceItemVO> list;
+    private Integer id;
 
-    public List<TravelResourceItemVO> getList() {
-        return list;
+    private String siteName;
+
+    List<TravelResourceItemVO> resourceItemVOList;
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setList(List<TravelResourceItemVO> list) {
-        this.list = list;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getSiteName() {
+        return siteName;
+    }
+
+    public void setSiteName(String siteName) {
+        this.siteName = siteName;
+    }
+
+    public List<TravelResourceItemVO> getResourceItemVOList() {
+        return resourceItemVOList;
+    }
+
+    public void setResourceItemVOList(List<TravelResourceItemVO> resourceItemVOList) {
+        this.resourceItemVOList = resourceItemVOList;
     }
 }
