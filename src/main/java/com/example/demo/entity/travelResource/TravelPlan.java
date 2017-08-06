@@ -37,7 +37,7 @@ public class TravelPlan{
      *
      * Example 1:
      * category 000001,                 000010, 000100,   001000    010000, 100000 represent the category
-     *          historical and culture, museum, religion, festival, nature, adventure respectively.
+     *          historical and culture, museum, religion, festival, nature, animal respectively.
      *
      * a travel plan has 3 travelResourceItems and their category code are 000010,000100,000010;
      * The travel plan's category code is 000110, store in 6.
@@ -54,7 +54,7 @@ public class TravelPlan{
 
     /**
      * scene 0000001, 0000010,  0000100, 0001000,   0010000, 0100000, 1000000 represent the scene
-     *       island,  mountain, prairie, Sea/Ocean, desert,  urban,   village respectively.
+     *       island,  mountain, prairie, sea/Ocean, desert,  urban,   remote area respectively.
      */
     @Column(name = "SCENE")
     private Integer scene;
@@ -74,8 +74,8 @@ public class TravelPlan{
     private Integer suitAge;
 
     /**
-     * category 000001,                 000010, 000100,   001000    010000, 100000 represent the category
-     *          historical and culture, museum, religion, festival, nature, adventure respectively.
+     * category 0000001,    0000010, 0000100,  0001000   0010000, 0100000, 1000000 represent the category
+     *          historical, museum,  religion, festival, nature,  animal,  building respectively.
      */
     @Column(name = "CATEGORY")
     private Integer category;

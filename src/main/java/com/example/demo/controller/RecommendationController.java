@@ -1,7 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Guest;
+import com.example.demo.model.TravelPlanVO;
+import com.example.demo.model.TravelSiteVO;
 import com.example.demo.service.GuestService;
+import com.example.demo.service.recommendation.RecommendationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 /**
  * Created by huweining on 2017/6/13.
  */
@@ -19,41 +24,34 @@ import org.springframework.web.servlet.ModelAndView;
 public class RecommendationController extends BaseController{
 
     @Autowired
-    @Qualifier("guestServiceImpl")
-    private GuestService guestService;
+    @Qualifier("recommendationServiceImpl")
+    private RecommendationService recommendationService;
 
 
-    @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    @RequestMapping(value = "/findTravelPlanByTags")
     @ResponseBody
-    public ResponseEntity addGuest(Guest guest){
-        boolean isSuccess = guestService.addGuest(guest);
-        if(isSuccess){
-            return this.returnSuccessMsg();
-        }else {
-            return this.returnFailMsg();
-        }
-
+    public ResponseEntity findTravelPlanByTags(Integer area, Integer scene, Integer season, Integer suitAge, Integer category){
+        List<TravelPlanVO> travelPlanVOList = recommendationService.findTravelPlanByTags(area, scene, season, suitAge, category);
+        return this.returnSuccessMsg(travelPlanVOList);
     }
 
     @RequestMapping(value = "/getRecommendationList", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity guest(){
-        return this.returnSuccessMsg(guestService.guestList());
+        return this.returnSuccessMsg(recommendationService.getDefaultRecommendationList());
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/buildTempTravelPlan", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity test(Guest guest){
-        guestService.updateGuest(guest);
-        return this.returnSuccessMsg("[]");
+    public ResponseEntity buildTempTravelPlan(List<TravelSiteVO> routeAndItems){
+        TravelPlanVO travelPlanVO = recommendationService.buildTempTravelPlan(routeAndItems);
+        return this.returnSuccessMsg(travelPlanVO);
 
     }
 
-    @RequestMapping(value = "/test2")
-    public ModelAndView test2(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("test");
-        return modelAndView;
+    @RequestMapping(value = "/findTravelResourceItemByTravelSiteId")
+    public ResponseEntity findTravelResourceItemByTravelSiteId(int travelSiteId){
+        return this.returnSuccessMsg(recommendationService.findTravelResourceItemByTravelSiteId(travelSiteId));
     }
 
     @RequestMapping(value = "/test3")

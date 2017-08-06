@@ -11,7 +11,9 @@ public class TravelSiteVO {
 
     private String siteName;
 
-    List<TravelResourceItemVO> resourceItemVOList;
+    private List<Integer> travelResourceItemVOIds;
+
+    private String area;
 
     public Integer getId() {
         return id;
@@ -29,11 +31,40 @@ public class TravelSiteVO {
         this.siteName = siteName;
     }
 
-    public List<TravelResourceItemVO> getResourceItemVOList() {
-        return resourceItemVOList;
+    public List<Integer> getTravelResourceItemVOIds() {
+        return travelResourceItemVOIds;
     }
 
-    public void setResourceItemVOList(List<TravelResourceItemVO> resourceItemVOList) {
-        this.resourceItemVOList = resourceItemVOList;
+    public void setTravelResourceItemVOIds(List<Integer> travelResourceItemVOIds) {
+        this.travelResourceItemVOIds = travelResourceItemVOIds;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public static String getAreaStringFromCode(int areaCode){
+        switch (areaCode){
+            case 1:
+                return "Japan";
+            case 3:
+                return "SE Asia";
+            case 7:
+                return "China";
+            case 15:
+                return "Europe";
+            case 31:
+                return "America";
+            case 63:
+                return "Australia";
+            case 127:
+                return "Africa";
+            default:
+                return "";
+        }
     }
 }

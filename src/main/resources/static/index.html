@@ -50,6 +50,12 @@
     <script src="/components/guest/service/guestService.js" type="text/javascript"></script>
     <script src="/components/login/controller/loginCtrl.js" type="text/javascript"></script>
     <script src="/components/login/service/loginService.js" type="text/javascript"></script>
+
+    <script src="/components/recommendation/controller/buildTempTravelPlanCtrl.js" type="text/javascript"></script>
+    <script src="/components/recommendation/controller/findTravelPlanByTagsCtrl.js" type="text/javascript"></script>
+    <script src="/components/recommendation/controller/findTravelResourceItemByTravelSiteIdCtrl.js" type="text/javascript"></script>
+    <script src="/components/recommendation/controller/getRecommendationListCtrl.js" type="text/javascript"></script>
+    <script src="/components/recommendation/service/recommendationService.js" type="text/javascript"></script>
 </head>
 <body>
 <div>
@@ -66,11 +72,11 @@
                     <!--<li ng-class="isActive('/inventory')">-->
                     <li class="dropdown"><a href="" role="button" class="dropdown-toggle" data-toggle="dropdown">Intelligent SaleHelper<b class="caret"></b></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#/recommendation/getList">Default List</a></li>
-                            <li><a href="#/recommendation/getList"></a></li>
-                            <li><a href="#validation/scaleci">Onrack @Scale Validation</a></li>
+                            <li><a href="#/recommendation/buildTempTravelPlan">Default List</a></li>
+                            <li><a href="#/recommendation/findTravelPlanByTags"></a></li>
+                            <li><a href="#/recommendation/findTravelResourceItemByTravelSiteId">Onrack @Scale Validation</a></li>
                             <li><a title="Platypus Diag Validation" href="#validation/platypus"><i class="fa fa-newspaper-o" style="font-size:18px;color:orange"></i> Diag Validation</a></li>
-                            <li><a href="#validation/fit">Fit Validation</a></li>
+                            <li><a href="#/recommendation/getRecommendationList">Fit Validation</a></li>
                         </ul>
                     </li>
                     <li ng-class="">

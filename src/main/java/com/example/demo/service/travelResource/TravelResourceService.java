@@ -1,6 +1,12 @@
 package com.example.demo.service.travelResource;
 
 import com.example.demo.entity.Guest;
+import com.example.demo.entity.travelResource.TravelPlan;
+import com.example.demo.entity.travelResource.TravelResourceItem;
+import com.example.demo.entity.travelResource.TravelSite;
+import com.example.demo.model.TravelPlanVO;
+import com.example.demo.model.TravelResourceItemVO;
+import com.example.demo.model.TravelSiteVO;
 
 import java.util.List;
 
@@ -8,8 +14,15 @@ import java.util.List;
  * Created by huweining on 2017/7/23.
  */
 public interface TravelResourceService {
-    boolean addGuest(Guest guest);
-    boolean loginAdmin(String username, String password);
-    boolean updateGuest(Guest guest);
-    List<Guest> guestList();
+    List<TravelSiteVO> findAllTravelVOSite();
+
+    List<TravelSiteVO> findTravelSiteVOByArea(int areaCode);
+
+    List<TravelResourceItemVO> findTravelResourceItemVOByTravelSiteId(int travelSiteId);
+
+    TravelSiteVO transformTravelSiteToTravelSiteVO(TravelSite travelSite);
+
+    TravelResourceItemVO transformTravelResourceItemToTravelResourceItemVO(TravelResourceItem travelResourceItem);
+
+    TravelPlanVO transformTravelPlanToTravelPlanVO(TravelPlan travelPlan, boolean alreadyExisted);
 }

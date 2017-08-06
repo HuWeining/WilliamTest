@@ -13,6 +13,9 @@ public class TravelResourceItem{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "NAME")
+    private String name;
+
     @Column(name = "DESCRIPTION")
     private String description;
 
@@ -43,7 +46,7 @@ public class TravelResourceItem{
      */
     /**
      * area 0000001, 0000010, 0000100, 0001000, 0010000, 0100000,   1000000 represent the area
-     *       Japan,   SE Asia, China,   Europe,  America, Australia, Africa  respectively.
+     *       Japan,   SE Asia, China,  Europe,  America, Australia, Africa  respectively.
      * a area code 0000111 represents a plan includes Japan, SE Asia, China, Europe, store in 7.
      */
     @Column(name = "AREA")
@@ -51,7 +54,7 @@ public class TravelResourceItem{
 
     /**
      * scene 0000001, 0000010,  0000100, 0001000,   0010000, 0100000, 1000000 represent the scene
-     *       island,  mountain, prairie, Sea/Ocean, desert,  urban,   village respectively.
+     *       island,  mountain, prairie, Sea/Ocean, desert,  urban,   remote area respectively.
      */
     @Column(name = "SCENE")
     private Integer scene;
@@ -71,8 +74,8 @@ public class TravelResourceItem{
     private Integer suitAge;
 
     /**
-     * category 000001,                 000010, 000100,   001000    010000, 100000 represent the category
-     *          historical and culture, museum, religion, festival, nature, adventure respectively.
+     * category 0000001,    0000010, 0000100,  0001000   0010000, 0100000, 1000000 represent the category
+     *          historical, museum,  religion, festival, nature,  animal,  building respectively.
      */
     @Column(name = "CATEGORY")
     private Integer category;
@@ -83,6 +86,14 @@ public class TravelResourceItem{
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -115,5 +126,45 @@ public class TravelResourceItem{
 
     public void setTravelSiteId(Integer travelSiteId) {
         this.travelSiteId = travelSiteId;
+    }
+
+    public Integer getArea() {
+        return area;
+    }
+
+    public void setArea(Integer area) {
+        this.area = area;
+    }
+
+    public Integer getScene() {
+        return scene;
+    }
+
+    public void setScene(Integer scene) {
+        this.scene = scene;
+    }
+
+    public Integer getSeason() {
+        return season;
+    }
+
+    public void setSeason(Integer season) {
+        this.season = season;
+    }
+
+    public Integer getSuitAge() {
+        return suitAge;
+    }
+
+    public void setSuitAge(Integer suitAge) {
+        this.suitAge = suitAge;
+    }
+
+    public Integer getCategory() {
+        return category;
+    }
+
+    public void setCategory(Integer category) {
+        this.category = category;
     }
 }

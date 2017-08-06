@@ -13,9 +13,9 @@ import java.util.List;
 public interface RecommendationService {
     List<TravelPlanVO> getDefaultRecommendationList();
 
-    TravelPlanVO buildTempTravelPlan(List<TravelSiteVO> route, CustomerVO customer);
+    TravelPlanVO buildTempTravelPlan(List<TravelSiteVO> route);
 
-    List<TravelPlanVO> findTravelPlan(Integer area, Integer scene, Integer season, Integer artificial, Integer climate);
+    List<TravelPlanVO> findTravelPlanByTags(Integer area, Integer scene, Integer season, Integer suitAge, Integer category);
 
     List<TravelResourceItemVO> findTravelResourceItemByTravelSiteId(Integer travelSiteId);
 }

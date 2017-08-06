@@ -1,0 +1,34 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Build Travel Plan</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <table ng-table="tableParams" class="table table-bordered table-hover table-condensed">
+        <colgroup>
+            <col width="5%" />
+            <col width="10%" />
+            <col width="15%" />
+            <col width="15%" />
+        </colgroup>
+        <h1>
+            Travel Site List
+        </h1>
+        <tr>
+            <th>Id</th>
+            <th>Area</th>
+            <th>siteName</th>
+        </tr>
+        <tr ng-repeat="row in travelSiteList">
+            <td header="'headerCheckbox.html'"><input type="checkbox" ng-model="row.checked" /></td>
+            <td title="'id'" sortable="'id'"><span>{{row.id}}</span></td>
+            <td title="'area'" sortable="'area'"><span>{{row.area}}</span></td>
+            <td title="'siteName'" sortable="'siteName'"><span>{{row.siteName}}</span></td>
+        </tr>
+    </table>
+</div>
+<div class="modal-footer">
+    <button id="addMachineButton" class="btn btn-primary" type="button" ng-click="addOneMachine()">Add machine</button>
+    <button id="cancelMachineButton" class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>
+<div>
+    <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+</div>

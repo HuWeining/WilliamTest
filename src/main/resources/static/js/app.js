@@ -27,6 +27,22 @@ app.config([ '$urlRouterProvider', '$stateProvider', function($urlRouterProvider
             url: '/guest',
             templateUrl: 'components/guest/guestList.html',
         })
+        .state('recommendation_buildTempTravelPlan', {
+            url: '/recommendation/buildTempTravelPlan',
+            templateUrl: 'components/recommendation/buildTempTravelPlan.html',
+        })
+        .state('recommendation_findTravelPlanByTags', {
+            url: '/recommendation/findTravelPlanByTags',
+            templateUrl: 'components/recommendation/findTravelPlanByTags.html',
+        })
+        .state('recommendation_findTravelResourceItemByTravelSiteId', {
+            url: '/recommendation/findTravelResourceItemByTravelSiteId',
+            templateUrl: 'components/recommendation/findTravelResourceItemByTravelSiteId.html',
+        })
+        .state('recommendation_getRecommendationList', {
+            url: '/recommendation/getRecommendationList',
+            templateUrl: 'components/recommendation/getRecommendationList.html',
+        })
 }]);
 
 

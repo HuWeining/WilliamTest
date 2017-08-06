@@ -1,0 +1,35 @@
+<div ng-controller="findTravelResourceItemByTravelSiteIdCtrl" ng-init="init()" style="padding-left: 40px;padding-right: 80px">
+    <table ng-table="tableParams" class="table table-bordered table-hover table-condensed">
+        <colgroup>
+            <col width="10%" />
+            <col width="15%" />
+            <col width="15%" />
+        </colgroup>
+        <h1>
+            Guest List
+        </h1>
+        <tr>
+            <th>Id</th>
+            <th>level</th>
+            <th>name</th>
+        </tr>
+        <tr ng-repeat="row in guestList">
+            <td title="'id'" sortable="'id'"><span>{{row.id}}</span></td>
+            <td title="'level'" sortable="'level'"><span>{{row.level}}</span></td>
+            <td title="'name'" sortable="'Username'"><span>{{row.name}}</span></td>
+            <!--<td title="'Password'" sortable="'Password'"><span>{{row.showPassword}}</span></td>-->
+            <!--<td title="'Management'">-->
+                <!--<div>-->
+                    <!--<button class="pull-left btn btn-success" 	type="button" style="width: 100px; padding: 2px 2px;"-->
+                            <!--id="machineInfo" ng-click="openMachineDetailModel(row)" title="machineInfo">-->
+                        <!--<i class="fa fa-info">Machine Info</i>-->
+                    <!--</button>-->
+                    <!--<button class="pull-left btn btn-success" 	type="button" style="width: 100px; padding: 2px 2px;"-->
+                            <!--id="deleteMachine" ng-click="deleteMachineDetailModel(row)" title="deleteMachine">-->
+                        <!--<i class="fa fa-trash">Delete</i>-->
+                    <!--</button>-->
+                <!--</div>-->
+            <!--</td>-->
+        </tr>
+    </table>
+</div>
