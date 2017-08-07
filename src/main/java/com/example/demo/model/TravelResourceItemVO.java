@@ -20,6 +20,8 @@ public class TravelResourceItemVO {
 
     private Integer price;
 
+    private Integer travelSiteId;
+
     private String travelSiteName;
 
     /**
@@ -96,6 +98,14 @@ public class TravelResourceItemVO {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public Integer getTravelSiteId() {
+        return travelSiteId;
+    }
+
+    public void setTravelSiteId(Integer travelSiteId) {
+        this.travelSiteId = travelSiteId;
     }
 
     public String getTravelSiteName() {

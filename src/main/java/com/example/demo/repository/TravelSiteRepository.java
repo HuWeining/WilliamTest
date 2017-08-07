@@ -13,4 +13,6 @@ import java.util.List;
 public interface TravelSiteRepository extends CrudRepository<TravelSite,Integer>{
     List<TravelSite> findByArea(int area);
 
+    List<TravelSite> findByIdIn(List<Integer> ids);
+
 }

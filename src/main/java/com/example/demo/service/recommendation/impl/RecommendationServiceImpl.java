@@ -62,19 +62,37 @@ public class RecommendationServiceImpl implements RecommendationService {
     }
 
     @Override
-    public TravelPlanVO buildTempTravelPlan(List<TravelSiteVO> route) {
+    public TravelPlanVO buildTempTravelPlan(List<Integer> travelResourceItemIds, List<Integer> travelSiteIds) {
+        List<TravelSite> travelSiteList = travelSiteRepository.findByIdIn(travelSiteIds);
+        List<TravelResourceItem> travelResourceItemList = travelResourceItemRepository.findByIdIn(travelResourceItemIds);
+        List<TravelResourceItemVO> travelResourceItemVOList = travelResourceItemList.stream().map(travelResourceItem-> {
+            return travelResourceService.transformTravelResourceItemToTravelResourceItemVO(travelResourceItem);
+        }).collect(Collectors.toList());
+        List<TravelSiteVO> travelSiteVOList = travelSiteList.stream().map(travelSite-> {
+            return travelResourceService.transformTravelSiteToTravelSiteVO(travelSite);
+        }).collect(Collectors.toList());
+        TravelPlanVO travelPlanVO = buildTempTravelPlanVO(travelSiteVOList,travelResourceItemVOList);
+        return travelPlanVO;
+    }
+
+    private TravelPlanVO buildTempTravelPlanVO(List<TravelSiteVO> route, List<TravelResourceItemVO> travelResourceItemVOList) {
         TravelPlan newTravelPlan = new TravelPlan();
         List<Integer> travelSiteIds = new ArrayList<>();
         List<Integer> bindingItemIds = new ArrayList<>();
         for(TravelSiteVO travelSiteVO : route){
             travelSiteIds.add(travelSiteVO.getId());
-
             TravelSiteBindingItemTemp travelSiteBindingItemTemp = new TravelSiteBindingItemTemp();
-            List<Integer> travelResourceItemIds = new ArrayList<>();
-            for(Integer travelResourceItemId : travelSiteVO.getTravelResourceItemVOIds()){
-                travelResourceItemIds.add(travelResourceItemId);
+            for(TravelResourceItemVO travelResourceItemVO : travelResourceItemVOList){
+                if(travelResourceItemVO.getTravelSiteId() == travelSiteVO.getId()){
+                    if(travelSiteVO.getTravelResourceItemVOs() == null){
+                        travelSiteVO.setTravelResourceItemVOs(new ArrayList<>());
+                        travelSiteVO.setTravelResourceItemVOIds(new ArrayList<>());
+                    }
+                    travelSiteVO.getTravelResourceItemVOs().add(travelResourceItemVO);
+                    travelSiteVO.getTravelResourceItemVOIds().add(travelResourceItemVO.getId());
+                }
             }
-            String travelResourceItemIdsJsonString = JSON.toJSONString(travelSiteBindingItemTemp);
+            String travelResourceItemIdsJsonString = JSON.toJSONString(travelSiteVO.getTravelResourceItemVOIds());
             travelSiteBindingItemTemp.setTravelSiteId(travelSiteVO.getId());
             travelSiteBindingItemTemp.setTravelResourceItemIds(travelResourceItemIdsJsonString);
             bindingItemIds.add(bindingTempRepository.save(travelSiteBindingItemTemp).getId());
@@ -82,7 +100,6 @@ public class RecommendationServiceImpl implements RecommendationService {
         newTravelPlan.setTravelSiteIds(JSON.toJSONString(travelSiteIds));
         newTravelPlan.setTravelSiteBindingItemIds(JSON.toJSONString(bindingItemIds));
         newTravelPlan = travelPlanRepository.save(newTravelPlan);
-
         TravelPlanVO travelPlanVO = travelResourceService.transformTravelPlanToTravelPlanVO(newTravelPlan,false);
         return travelPlanVO;
     }

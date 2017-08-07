@@ -1,4 +1,5 @@
-app.controller('buildTempTravelPlanCtrl', [ '$scope', 'recommendationService','$stomp', '$uibModal',function($scope, recommendationService, $stomp, $uibModal) {
+app.controller('buildTempTravelPlanCtrl', [ '$scope', 'recommendationService','$stomp', '$uibModal','$state'
+    ,function($scope, recommendationService, $stomp, $uibModal,$state) {
 
     getAllTravelSite = function(){
         var params = {
@@ -33,28 +34,17 @@ app.controller('buildTempTravelPlanCtrl', [ '$scope', 'recommendationService','$
             if(res !== undefined){
                 if (res.status === 200 && res.data.success){
                     $scope.travelResourceItem = res.data.data;
-                    notify("Get binding travel resource item successfully",'success', true);
+                    recommendationService.putTravelResourceItems($scope.travelResourceItem);
+                    toBuildPlanDetail();
                 }else {
                     notify("Get binding travel resource item unsuccessfully",'danger', true);
                 }
             }
         });
+    };
 
-        var uibModalInstance = $uibModal.open({
-            templateUrl : 'components/recommendation/buildPlanDetail.html',
-            controller : 'buildTempTravelPlanCtrl',
-            scope : $scope,
-            size : 'lg',
-            backdrop : true,
-            dialogFade : true,
-            backdropFade : false,
-            // resolve: {
-            //     items: function () {
-            //         $scope.row = row;
-            //         return $scope.row;
-            //     }
-            // }
-        });
+    toBuildPlanDetail = function () {
+        $state.go('recommendation_buildPlanDetail');
     };
 
     init = function() {

@@ -14,4 +14,6 @@ public interface TravelResourceItemRepository extends CrudRepository<TravelResou
 
     List<TravelResourceItem> findByTravelSiteId(int travelSiteId);
 
+    List<TravelResourceItem> findByIdIn(List<Integer> ids);
+
 }

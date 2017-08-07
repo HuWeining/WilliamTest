@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.example.demo.entity.Guest;
 import com.example.demo.model.TravelPlanVO;
 import com.example.demo.model.TravelSiteVO;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -43,8 +46,11 @@ public class RecommendationController extends BaseController{
 
     @RequestMapping(value = "/buildTempTravelPlan", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity buildTempTravelPlan(List<TravelSiteVO> routeAndItems){
-        TravelPlanVO travelPlanVO = recommendationService.buildTempTravelPlan(routeAndItems);
+    public ResponseEntity buildTempTravelPlan(String travelResourceItemIdsJson, String travelSiteIdsJson){
+        List<Integer> travelResourceItemIds = JSON.parseArray(travelResourceItemIdsJson, Integer.class);
+        List<Integer> travelSiteIds = JSON.parseArray(travelSiteIdsJson, Integer.class);
+        travelSiteIds = new ArrayList<>(new HashSet<>(travelSiteIds));
+        TravelPlanVO travelPlanVO = recommendationService.buildTempTravelPlan(travelResourceItemIds, travelSiteIds);
         return this.returnSuccessMsg(travelPlanVO);
 
     }

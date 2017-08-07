@@ -13,6 +13,8 @@ public class TravelSiteVO {
 
     private List<Integer> travelResourceItemVOIds;
 
+    private List<TravelResourceItemVO> travelResourceItemVOs;
+
     private String area;
 
     public Integer getId() {
@@ -37,6 +39,14 @@ public class TravelSiteVO {
 
     public void setTravelResourceItemVOIds(List<Integer> travelResourceItemVOIds) {
         this.travelResourceItemVOIds = travelResourceItemVOIds;
+    }
+
+    public List<TravelResourceItemVO> getTravelResourceItemVOs() {
+        return travelResourceItemVOs;
+    }
+
+    public void setTravelResourceItemVOs(List<TravelResourceItemVO> travelResourceItemVOs) {
+        this.travelResourceItemVOs = travelResourceItemVOs;
     }
 
     public String getArea() {

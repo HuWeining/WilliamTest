@@ -13,7 +13,7 @@ import java.util.List;
 public interface RecommendationService {
     List<TravelPlanVO> getDefaultRecommendationList();
 
-    TravelPlanVO buildTempTravelPlan(List<TravelSiteVO> route);
+    TravelPlanVO buildTempTravelPlan(List<Integer> travelResourceItemIds, List<Integer> travelSiteIds);
 
     List<TravelPlanVO> findTravelPlanByTags(Integer area, Integer scene, Integer season, Integer suitAge, Integer category);
 
