@@ -79,7 +79,9 @@ public class RecommendationServiceImpl implements RecommendationService {
         TravelPlan newTravelPlan = new TravelPlan();
         List<Integer> travelSiteIds = new ArrayList<>();
         List<Integer> bindingItemIds = new ArrayList<>();
+        String travelPlanName = "";
         for(TravelSiteVO travelSiteVO : route){
+            travelPlanName = travelPlanName+travelSiteVO.getSiteName()+",";
             travelSiteIds.add(travelSiteVO.getId());
             TravelSiteBindingItemTemp travelSiteBindingItemTemp = new TravelSiteBindingItemTemp();
             for(TravelResourceItemVO travelResourceItemVO : travelResourceItemVOList){
@@ -99,6 +101,7 @@ public class RecommendationServiceImpl implements RecommendationService {
         }
         newTravelPlan.setTravelSiteIds(JSON.toJSONString(travelSiteIds));
         newTravelPlan.setTravelSiteBindingItemIds(JSON.toJSONString(bindingItemIds));
+        newTravelPlan.setName(travelPlanName.substring(0,travelPlanName.length()-1)+" temp travel plan");
         newTravelPlan = travelPlanRepository.save(newTravelPlan);
         TravelPlanVO travelPlanVO = travelResourceService.transformTravelPlanToTravelPlanVO(newTravelPlan,false);
         return travelPlanVO;

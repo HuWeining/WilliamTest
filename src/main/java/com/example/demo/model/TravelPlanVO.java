@@ -3,6 +3,7 @@ package com.example.demo.model;
 
 import com.example.demo.entity.travelResource.TravelResourceItem;
 import com.example.demo.entity.travelResource.TravelSite;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ public class TravelPlanVO{
 
     private List<Integer> travelSiteBindingItemIds;
 
-    private Map<TravelSite, List<TravelResourceItem>> detailTravelPlanMap;
+    private List<TravelSiteAndTravelResourceItemList> travelSiteAndTravelResourceItemLists;
 
     private Integer cost;
 
@@ -71,12 +72,12 @@ public class TravelPlanVO{
         this.name = name;
     }
 
-    public Map<TravelSite, List<TravelResourceItem>> getDetailTravelPlanMap() {
-        return detailTravelPlanMap;
+    public List<TravelSiteAndTravelResourceItemList> getTravelSiteAndTravelResourceItemLists() {
+        return travelSiteAndTravelResourceItemLists;
     }
 
-    public void setDetailTravelPlanMap(Map<TravelSite, List<TravelResourceItem>> detailTravelPlanMap) {
-        this.detailTravelPlanMap = detailTravelPlanMap;
+    public void setTravelSiteAndTravelResourceItemLists(List<TravelSiteAndTravelResourceItemList> travelSiteAndTravelResourceItemLists) {
+        this.travelSiteAndTravelResourceItemLists = travelSiteAndTravelResourceItemLists;
     }
 
     public Integer getCost() {
@@ -117,5 +118,26 @@ public class TravelPlanVO{
 
     public void setGrade(double grade) {
         this.grade = grade;
+    }
+
+    public static class TravelSiteAndTravelResourceItemList{
+        TravelSite travelSite;
+        List<TravelResourceItem> travelResourceItemList;
+
+        public TravelSite getTravelSite() {
+            return travelSite;
+        }
+
+        public void setTravelSite(TravelSite travelSite) {
+            this.travelSite = travelSite;
+        }
+
+        public List<TravelResourceItem> getTravelResourceItemList() {
+            return travelResourceItemList;
+        }
+
+        public void setTravelResourceItemList(List<TravelResourceItem> travelResourceItemList) {
+            this.travelResourceItemList = travelResourceItemList;
+        }
     }
 }

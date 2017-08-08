@@ -43,6 +43,10 @@ app.config([ '$urlRouterProvider', '$stateProvider', function($urlRouterProvider
             url: '/recommendation/getRecommendationList',
             templateUrl: 'components/recommendation/getRecommendationList.html',
         })
+        .state('recommendation_buildPlanProcess', {
+            url: '/recommendation/buildPlanProcess',
+            templateUrl: 'components/recommendation/buildPlanProcess.html',
+        })
         .state('recommendation_buildPlanDetail', {
             url: '/recommendation/buildPlanDetail',
             templateUrl: 'components/recommendation/buildPlanDetail.html',

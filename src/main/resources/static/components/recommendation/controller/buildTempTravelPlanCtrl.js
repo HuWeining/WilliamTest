@@ -44,7 +44,7 @@ app.controller('buildTempTravelPlanCtrl', [ '$scope', 'recommendationService','$
     };
 
     toBuildPlanDetail = function () {
-        $state.go('recommendation_buildPlanDetail');
+        $state.go('recommendation_buildPlanProcess');
     };
 
     init = function() {

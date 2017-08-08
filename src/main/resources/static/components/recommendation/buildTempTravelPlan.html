@@ -1,13 +1,11 @@
 <div ng-controller="buildTempTravelPlanCtrl" ng-init="init()" style="padding-left: 40px;padding-right: 80px">
 
     <div>
-        <label class="col-md-2">Machine Name:</label>
         <button class="pull-right btn btn-success" type="button" style="width: 200px; padding: 2px 2px;"
                  ng-click="openTravelPlanBuildBox()" title="buildTravelPlan">
-            <i class="fa fa-upload">Build Travel Plan</i>
+            <i class="fa fa-upload">Travel Site List</i>
         </button>
     </div>
-
 
     <table ng-table="tableParams" class="table table-bordered table-hover table-condensed">
         <colgroup>
@@ -16,9 +14,6 @@
             <col width="15%" />
             <col width="15%" />
         </colgroup>
-        <h1>
-            Travel Site List
-        </h1>
         <tr>
             <th></th>
             <th>Id</th>
@@ -31,10 +26,8 @@
             <td title="'area'" sortable="'area'"><span>{{row.area}}</span></td>
             <td title="'siteName'" sortable="'siteName'"><span>{{row.siteName}}</span></td>
         </tr>
-
-
-        <div>Select Travel Site : {{selectData}}</div>
-        <div>Select Travel selectTravelSiteIds : {{travelSiteIds}}</div>
-        <div>Select Travel Resource : {{travelResourceItem}}</div>
+        <!--<div>Select Travel Site : {{selectData}}</div>-->
+        <!--<div>Select Travel selectTravelSiteIds : {{travelSiteIds}}</div>-->
+        <!--<div>Select Travel Resource : {{travelResourceItem}}</div>-->
     </table>
 </div>

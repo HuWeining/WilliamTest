@@ -3,6 +3,8 @@ app.factory('recommendationService', ['$http', function($http){
 
 	var travelResourceItemStore;
 
+	var tempTravelPlanStore;
+
 	var _getAllTravelSite = function(params){
 		var promise = $http({
 			method : 'GET',
@@ -33,7 +35,7 @@ app.factory('recommendationService', ['$http', function($http){
         travelResourceItemStore = travelResourceItem;
     }
 
-    var _getTravelResourceItems = function(travelResourceItem){
+    var _getTravelResourceItems = function(){
         return travelResourceItemStore;
     }
 
@@ -50,7 +52,16 @@ app.factory('recommendationService', ['$http', function($http){
         return promise;
     };
 
+    var _putTempTravelPlan = function(tempTravelPlan){
+        tempTravelPlanStore = tempTravelPlan;
+    }
 
+    var _getTempTravelPlan = function(){
+        return tempTravelPlanStore;
+    }
+
+    recommendationService.putTempTravelPlan = _putTempTravelPlan;
+    recommendationService.getTempTravelPlan = _getTempTravelPlan;
     recommendationService.getAllTravelSite = _getAllTravelSite;
     recommendationService.findTravelResourceItemByTravelSiteId = _findTravelResourceItemByTravelSiteId;
     recommendationService.putTravelResourceItems = _putTravelResourceItems;

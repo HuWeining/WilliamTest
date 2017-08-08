@@ -1,0 +1,61 @@
+<div ng-controller="buildPlanProcessCtrl" ng-init="init()" style="padding-left: 40px;padding-right: 80px">
+    <div class="modal-header">
+        <h1 class="modal-title" id="modal-title">Build Travel Plan</h1>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <table ng-table="tableParams" class="table table-bordered table-hover table-condensed">
+            <colgroup>
+                <col width="5%" />
+                <col width="10%" />
+                <col width="15%" />
+                <col width="15%" />
+                <col width="15%" />
+                <col width="15%" />
+                <col width="15%" />
+                <col width="15%" />
+                <col width="15%" />
+                <col width="15%" />
+                <col width="15%" />
+            </colgroup>
+            <h1>
+                Travel Assemble Process
+            </h1>
+            <tr>
+                <th></th>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Cost</th>
+                <th>Travel Site Name</th>
+                <th>AREA</th>
+                <th>SCENE</th>
+                <th>SEASON</th>
+                <th>SUIT AGE</th>
+                <th>CATEGORY</th>
+
+            </tr>
+            <tr ng-repeat="row in travelResourceItem">
+                <td header="'headerCheckbox.html'"><input type="checkbox" ng-model="row.checked" /></td>
+                <td title="'id'"><span>{{row.id}}</span></td>
+                <td title="'name'" ><span>{{row.name}}</span></td>
+                <td title="'description'"><span>{{row.description}}</span></td>
+                <td title="'price'"><span>{{row.price}}</span></td>
+                <td title="'cost'"><span>{{row.cost}}</span></td>
+                <td title="'travelSiteName'"><span>{{row.travelSiteName}}</span></td>
+                <td title="'area'"><span>{{row.area}}</span></td>
+                <td title="'scene'"><span>{{row.scene}}</span></td>
+                <td title="'season'"><span>{{row.season}}</span></td>
+                <td title="'suitAge'"><span>{{row.suitAge}}</span></td>
+                <td title="'category'"><span>{{row.category}}</span></td>
+            </tr>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="buildPlan()">Build Plan</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+    <div>
+        <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+    </div>
+</div>

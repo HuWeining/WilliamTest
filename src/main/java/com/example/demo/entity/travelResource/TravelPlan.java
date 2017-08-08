@@ -12,6 +12,10 @@ public class TravelPlan{
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "NAME")
+    private String name;
+
     /**
      * TRAVEL_SITE_IDS EXAMPLE: [1,2,5,6,12]
      */
@@ -86,6 +90,14 @@ public class TravelPlan{
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getTravelSiteIds() {

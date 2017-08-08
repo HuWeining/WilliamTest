@@ -127,7 +127,7 @@ public class TravelResourceServiceImpl implements TravelResourceService {
         int price,cost;
         price = cost = 0;
         for(Integer bindingItemId : travelPlanVO.getTravelSiteBindingItemIds()){
-            TravelSiteBindingItem travelSiteBindingItem = bindingRepository.findOne(bindingItemId);
+            TravelSiteBindingItemTemp travelSiteBindingItem = bindingTempRepository.findOne(bindingItemId);
             List<Integer> travelResourceItems = JSON.parseArray(travelSiteBindingItem.getTravelResourceItemIds(), Integer.class);
             for(Integer travelResourceItemId : travelResourceItems){
                 TravelResourceItem travelResourceItem = travelResourceItemRepository.findOne(travelResourceItemId);
@@ -141,7 +141,7 @@ public class TravelResourceServiceImpl implements TravelResourceService {
     }
 
     private TravelPlanVO fillTravelPlanDetailMap(TravelPlanVO travelPlanVO){
-        Map<TravelSite, List<TravelResourceItem>> detailTravelPlanMap = new HashMap<>();
+        List<TravelPlanVO.TravelSiteAndTravelResourceItemList> travelSiteAndTravelResourceItemLists = new ArrayList<>();
         List<Integer> travelSiteIds = travelPlanVO.getTravelSiteIds();
         List<Integer> bindingItemIds = travelPlanVO.getTravelSiteBindingItemIds();
         Assert.isTrue(travelSiteIds.size() == bindingItemIds.size(), "travelSiteIds size doesn't equal bindingItemIds");
@@ -156,9 +156,12 @@ public class TravelResourceServiceImpl implements TravelResourceService {
             for(Integer travelResourceItemId : travelResourceItemIds){
                 travelResourceItemList.add(travelResourceItemRepository.findOne(travelResourceItemId));
             }
-            detailTravelPlanMap.put(travelSite,travelResourceItemList);
+            TravelPlanVO.TravelSiteAndTravelResourceItemList travelPlanDetialItem = new TravelPlanVO.TravelSiteAndTravelResourceItemList();
+            travelPlanDetialItem.setTravelSite(travelSite);
+            travelPlanDetialItem.setTravelResourceItemList(travelResourceItemList);
+            travelSiteAndTravelResourceItemLists.add(travelPlanDetialItem);
         }
-        travelPlanVO.setDetailTravelPlanMap(detailTravelPlanMap);
+        travelPlanVO.setTravelSiteAndTravelResourceItemLists(travelSiteAndTravelResourceItemLists);
         return travelPlanVO;
     }
 }

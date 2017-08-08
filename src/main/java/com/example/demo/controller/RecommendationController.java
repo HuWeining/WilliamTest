@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.example.demo.algorithm.EvaluationSorting;
 import com.example.demo.entity.Guest;
 import com.example.demo.model.TravelPlanVO;
 import com.example.demo.model.TravelSiteVO;
@@ -51,6 +52,7 @@ public class RecommendationController extends BaseController{
         List<Integer> travelSiteIds = JSON.parseArray(travelSiteIdsJson, Integer.class);
         travelSiteIds = new ArrayList<>(new HashSet<>(travelSiteIds));
         TravelPlanVO travelPlanVO = recommendationService.buildTempTravelPlan(travelResourceItemIds, travelSiteIds);
+        travelPlanVO.setGrade(EvaluationSorting.evaluationTravelPlan(travelPlanVO));
         return this.returnSuccessMsg(travelPlanVO);
 
     }
