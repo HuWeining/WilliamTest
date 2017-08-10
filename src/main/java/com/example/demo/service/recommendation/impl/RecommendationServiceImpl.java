@@ -71,15 +71,47 @@ public class RecommendationServiceImpl implements RecommendationService {
         List<TravelSiteVO> travelSiteVOList = travelSiteList.stream().map(travelSite-> {
             return travelResourceService.transformTravelSiteToTravelSiteVO(travelSite);
         }).collect(Collectors.toList());
-        TravelPlanVO travelPlanVO = buildTempTravelPlanVO(travelSiteVOList,travelResourceItemVOList);
+        TravelPlanVO travelPlanVO = buildTempTravelPlanVO(travelSiteVOList,travelResourceItemVOList, travelResourceItemList);
         return travelPlanVO;
     }
 
-    private TravelPlanVO buildTempTravelPlanVO(List<TravelSiteVO> route, List<TravelResourceItemVO> travelResourceItemVOList) {
+    private TravelPlanVO buildTempTravelPlanVO(List<TravelSiteVO> route, List<TravelResourceItemVO> travelResourceItemVOList, List<TravelResourceItem> travelResourceItemList) {
         TravelPlan newTravelPlan = new TravelPlan();
         List<Integer> travelSiteIds = new ArrayList<>();
         List<Integer> bindingItemIds = new ArrayList<>();
         String travelPlanName = "";
+        Integer area = null;
+        Integer scene = null;
+        Integer season = null;
+        Integer suitAge = null;
+        Integer category = null;
+        for(TravelResourceItem travelResourceItem : travelResourceItemList){
+            if(area == null){
+                area = travelResourceItem.getArea();
+            }else {
+                area = area | travelResourceItem.getArea();
+            }
+            if(scene == null){
+                scene = travelResourceItem.getScene();
+            }else {
+                scene = scene | travelResourceItem.getScene();
+            }
+            if(season == null){
+                season = travelResourceItem.getSeason();
+            }else {
+                season = season & travelResourceItem.getSeason();
+            }
+            if(suitAge == null){
+                suitAge = travelResourceItem.getSuitAge();
+            }else {
+                suitAge = suitAge & travelResourceItem.getSuitAge();
+            }
+            if(category == null){
+                category = travelResourceItem.getCategory();
+            }else {
+                category = category | travelResourceItem.getCategory();
+            }
+        }
         for(TravelSiteVO travelSiteVO : route){
             travelPlanName = travelPlanName+travelSiteVO.getSiteName()+",";
             travelSiteIds.add(travelSiteVO.getId());
@@ -99,17 +131,24 @@ public class RecommendationServiceImpl implements RecommendationService {
             travelSiteBindingItemTemp.setTravelResourceItemIds(travelResourceItemIdsJsonString);
             bindingItemIds.add(bindingTempRepository.save(travelSiteBindingItemTemp).getId());
         }
+        newTravelPlan.setAlreadyExisted(false);
+        newTravelPlan.setArea(area);
+        newTravelPlan.setScene(scene);
+        newTravelPlan.setSeason(season);
+        newTravelPlan.setSuitAge(suitAge);
+        newTravelPlan.setCategory(category);
         newTravelPlan.setTravelSiteIds(JSON.toJSONString(travelSiteIds));
         newTravelPlan.setTravelSiteBindingItemIds(JSON.toJSONString(bindingItemIds));
-        newTravelPlan.setName(travelPlanName.substring(0,travelPlanName.length()-1)+" temp travel plan");
+        newTravelPlan.setName(travelPlanName.substring(0,travelPlanName.length()-1)+" travel plan");
+        travelResourceService.calPriceAndCost(newTravelPlan);
         newTravelPlan = travelPlanRepository.save(newTravelPlan);
         TravelPlanVO travelPlanVO = travelResourceService.transformTravelPlanToTravelPlanVO(newTravelPlan,false);
         return travelPlanVO;
     }
 
     @Override
-    public List<TravelPlanVO> findTravelPlanByTags(Integer area, Integer scene, Integer season, Integer suitAge, Integer category) {
-        List<TravelPlan> travelPlanList = travelPlanRepository.findTravelPlanByTags(area,scene,season,suitAge,category);
+    public List<TravelPlanVO> findTravelPlanByTags(Integer area, Integer scene, Integer season, Integer suitAge, Integer category, boolean alreadyExisted) {
+        List<TravelPlan> travelPlanList = travelPlanRepository.findTravelPlanByTags(area,scene,season,suitAge,category,alreadyExisted);
         List<TravelPlanVO> travelPlanVOList = travelPlanList.stream().map(travelPlan -> {
             //find travel plan for existed travel plan database
             return travelResourceService.transformTravelPlanToTravelPlanVO(travelPlan,true);
@@ -127,7 +166,7 @@ public class RecommendationServiceImpl implements RecommendationService {
             RecommendationSorting.travelPlanSort(travelPlanVOList);
             travelPlanVOList = travelPlanVOList.subList(0, RecommendationConstant.DEFAULT_RECOMMENDATION_SIZE);
         }else {
-            List<TravelPlanVO> lessMatchTravelPlanVOList = getLessMatchTravelPlanList(area,scene,season,suitAge,category);
+            List<TravelPlanVO> lessMatchTravelPlanVOList = getLessMatchTravelPlanList(area,scene,season,suitAge,category,alreadyExisted);
             RecommendationSorting.travelPlanSort(lessMatchTravelPlanVOList);
             if(lessMatchTravelPlanVOList.size() < RecommendationConstant.DEFAULT_RECOMMENDATION_SIZE - travelPlanVOList.size()){
                 travelPlanVOList.addAll(lessMatchTravelPlanVOList);
@@ -175,22 +214,22 @@ public class RecommendationServiceImpl implements RecommendationService {
 //    }
 
 
-    private List<TravelPlanVO> getLessMatchTravelPlanList(Integer area, Integer scene, Integer season, Integer suitAge, Integer category){
+    private List<TravelPlanVO> getLessMatchTravelPlanList(Integer area, Integer scene, Integer season, Integer suitAge, Integer category, Boolean alreadyExisted){
         List<TravelPlan> lessMatchTravelPlanList = new ArrayList<>();
         if(area != 0){
-            lessMatchTravelPlanList.addAll(travelPlanRepository.findTravelPlanByTags(0,scene,season,suitAge,category));
+            lessMatchTravelPlanList.addAll(travelPlanRepository.findTravelPlanByTags(0,scene,season,suitAge,category,alreadyExisted));
         }
         if(scene != 0){
-            lessMatchTravelPlanList.addAll(travelPlanRepository.findTravelPlanByTags(area,0,season,suitAge,category));
+            lessMatchTravelPlanList.addAll(travelPlanRepository.findTravelPlanByTags(area,0,season,suitAge,category,alreadyExisted));
         }
         if(season != 0){
-            lessMatchTravelPlanList.addAll(travelPlanRepository.findTravelPlanByTags(area,scene,0,suitAge,category));
+            lessMatchTravelPlanList.addAll(travelPlanRepository.findTravelPlanByTags(area,scene,0,suitAge,category,alreadyExisted));
         }
         if(suitAge != 0){
-            lessMatchTravelPlanList.addAll(travelPlanRepository.findTravelPlanByTags(area,scene,season,0,category));
+            lessMatchTravelPlanList.addAll(travelPlanRepository.findTravelPlanByTags(area,scene,season,0,category,alreadyExisted));
         }
         if(category != 0){
-            lessMatchTravelPlanList.addAll(travelPlanRepository.findTravelPlanByTags(area,scene,season,suitAge,0));
+            lessMatchTravelPlanList.addAll(travelPlanRepository.findTravelPlanByTags(area,scene,season,suitAge,0,alreadyExisted));
         }
         return lessMatchTravelPlanList.stream().map(travelPlan -> {
             //find travel plan for existed travel plan database

@@ -131,4 +131,52 @@ public class TravelPlan{
     public void setPrice(Integer price) {
         this.price = price;
     }
+
+    public Boolean getAlreadyExisted() {
+        return alreadyExisted;
+    }
+
+    public void setAlreadyExisted(Boolean alreadyExisted) {
+        this.alreadyExisted = alreadyExisted;
+    }
+
+    public Integer getArea() {
+        return area;
+    }
+
+    public void setArea(Integer area) {
+        this.area = area;
+    }
+
+    public Integer getScene() {
+        return scene;
+    }
+
+    public void setScene(Integer scene) {
+        this.scene = scene;
+    }
+
+    public Integer getSeason() {
+        return season;
+    }
+
+    public void setSeason(Integer season) {
+        this.season = season;
+    }
+
+    public Integer getSuitAge() {
+        return suitAge;
+    }
+
+    public void setSuitAge(Integer suitAge) {
+        this.suitAge = suitAge;
+    }
+
+    public Integer getCategory() {
+        return category;
+    }
+
+    public void setCategory(Integer category) {
+        this.category = category;
+    }
 }

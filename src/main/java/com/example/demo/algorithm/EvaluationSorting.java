@@ -12,8 +12,8 @@ public class EvaluationSorting {
 
     public static double evaluationTravelPlan(TravelPlanVO travelPlanVO){
         int grossProfit = travelPlanVO.getPrice() - travelPlanVO.getCost();
-        double acceptance = 1;
-        double judgement = 1;
+        double acceptance = 0.8;
+        double judgement = 0.8;
         double matchDegree = travelPlanVO.getMatchDegree();
         double grade = grossProfit * acceptance * judgement * matchDegree;
         travelPlanVO.setGrade(grade);

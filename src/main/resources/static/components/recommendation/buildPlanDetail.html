@@ -3,10 +3,17 @@
         <h1 class="modal-title" id="modal-title">Travel Plan Detail</h1>
     </div>
     <div class="modal-body" id="modal-body">
-        <h1>
-            Existed: {{tempTravelPlan.alreadyExisted}}
-            {{tempTravelPlan.cost}}
-        </h1>
+        <h4>Plan Id :</h4>{{tempTravelPlan.id}}
+        <h4>Grade :</h4>{{tempTravelPlan.grade| number:2}}
+        <h4>Price :</h4>{{tempTravelPlan.price| number:2}}<br>
+        <h4>Cost :</h4>{{tempTravelPlan.cost| number:2}}
+        <h4>Route :</h4>{{tempTravelPlan.route}}
+        <h3>Tags:</h3><br>
+        <h4>Area :</h4>{{tempTravelPlan.area}}<br>
+        <h4>Scene :</h4>{{tempTravelPlan.scene}}<br>
+        <h4>Season :</h4>{{tempTravelPlan.season}}<br>
+        <h4>Suit Age :</h4>{{tempTravelPlan.suitAge}}<br>
+        <h4>Category :</h4>{{tempTravelPlan.category}}<br>
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" type="button" ng-click="buildPlan()">Build Plan</button>

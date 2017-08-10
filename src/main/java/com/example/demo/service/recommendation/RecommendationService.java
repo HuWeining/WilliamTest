@@ -15,7 +15,7 @@ public interface RecommendationService {
 
     TravelPlanVO buildTempTravelPlan(List<Integer> travelResourceItemIds, List<Integer> travelSiteIds);
 
-    List<TravelPlanVO> findTravelPlanByTags(Integer area, Integer scene, Integer season, Integer suitAge, Integer category);
+    List<TravelPlanVO> findTravelPlanByTags(Integer area, Integer scene, Integer season, Integer suitAge, Integer category, boolean alreadyExisted);
 
     List<TravelResourceItemVO> findTravelResourceItemByTravelSiteId(Integer travelSiteId);
 }

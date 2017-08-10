@@ -29,6 +29,8 @@ public class TravelPlanVO{
 
     private Boolean alreadyExisted;
 
+    private String route;
+
     /**
      * matchDegree default value = 1
      */
@@ -39,6 +41,43 @@ public class TravelPlanVO{
      * and used in com.example.demo.algorithm.RecommendationSorting#travelPlanSort(java.util.List)
      */
     private double grade;
+
+
+    /**
+     * area 0000001, 0000010, 0000100, 0001000, 0010000, 0100000,   1000000 represent the area
+     *       Japan,  SE Asia, China,   Europe, America, Australia, Africa  respectively.
+     *      (1,      2,       4,       8,      16,      32,        64)
+     * a area code 0000111 represents a plan includes Japan, SE Asia, China, Europe, store in 7.
+     */
+    private List<String> area;
+
+    /**
+     * scene 0000001, 0000010,  0000100, 0001000,   0010000, 0100000, 1000000 represent the scene
+     *       island,  mountain, prairie, sea/Ocean, desert,  urban,   remote area respectively.
+     *       (1,      2,        4,       8,         16,      32,      64)
+     */
+    private List<String> scene;
+
+    /**
+     * season 0001,   0010,   0100,   1000 represent the season
+     *        spring, summer, autumn, winter respectively.
+     *        (1,     2,      4,      8)
+     */
+    private List<String> season;
+
+    /**
+     * suit_age 0001,  0010,  0100,        1000 represent the suit age
+     *          child, young, middle-aged, elderly respectively.
+     *          (1,    2,     4,           8)
+     */
+    private List<String> suitAge;
+
+    /**
+     * category 0000001,    0000010, 0000100,  0001000   0010000, 0100000, 1000000 represent the category
+     *          historical, museum,  religion, festival, nature,  animal,  building respectively.
+     *          (1,         2,       4,        8,        16,      32,      64)
+     */
+    private List<String> category;
 
     public Integer getId() {
         return id;
@@ -104,6 +143,14 @@ public class TravelPlanVO{
         this.alreadyExisted = alreadyExisted;
     }
 
+    public String getRoute() {
+        return route;
+    }
+
+    public void setRoute(String route) {
+        this.route = route;
+    }
+
     public double getMatchDegree() {
         return matchDegree;
     }
@@ -139,5 +186,45 @@ public class TravelPlanVO{
         public void setTravelResourceItemList(List<TravelResourceItem> travelResourceItemList) {
             this.travelResourceItemList = travelResourceItemList;
         }
+    }
+
+    public List<String> getArea() {
+        return area;
+    }
+
+    public void setArea(List<String> area) {
+        this.area = area;
+    }
+
+    public List<String> getScene() {
+        return scene;
+    }
+
+    public void setScene(List<String> scene) {
+        this.scene = scene;
+    }
+
+    public List<String> getSeason() {
+        return season;
+    }
+
+    public void setSeason(List<String> season) {
+        this.season = season;
+    }
+
+    public List<String> getSuitAge() {
+        return suitAge;
+    }
+
+    public void setSuitAge(List<String> suitAge) {
+        this.suitAge = suitAge;
+    }
+
+    public List<String> getCategory() {
+        return category;
+    }
+
+    public void setCategory(List<String> category) {
+        this.category = category;
     }
 }

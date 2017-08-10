@@ -35,7 +35,7 @@ public class RecommendationController extends BaseController{
     @RequestMapping(value = "/findTravelPlanByTags")
     @ResponseBody
     public ResponseEntity findTravelPlanByTags(Integer area, Integer scene, Integer season, Integer suitAge, Integer category){
-        List<TravelPlanVO> travelPlanVOList = recommendationService.findTravelPlanByTags(area, scene, season, suitAge, category);
+        List<TravelPlanVO> travelPlanVOList = recommendationService.findTravelPlanByTags(area, scene, season, suitAge, category, true);
         return this.returnSuccessMsg(travelPlanVOList);
     }
 

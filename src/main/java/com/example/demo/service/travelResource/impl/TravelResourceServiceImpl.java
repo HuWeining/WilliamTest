@@ -112,21 +112,28 @@ public class TravelResourceServiceImpl implements TravelResourceService {
         travelPlanVO.setId(travelPlan.getId());
         travelPlanVO.setTravelSiteIds(travelSiteIds);
         travelPlanVO.setTravelSiteBindingItemIds(travelSiteBindingItemIds);
+        travelPlanVO.setPrice(travelPlan.getPrice());
+        travelPlanVO.setCost(travelPlan.getCost());
+        travelPlanVO.setArea(TravelResourceItemVO.getStringFromCode(travelPlan.getArea(), RecommendationConstant.TRAVEL_RESOURCE_ITEM_FIELD_TYPE_AREA));
+        travelPlanVO.setScene(TravelResourceItemVO.getStringFromCode(travelPlan.getScene(), RecommendationConstant.TRAVEL_RESOURCE_ITEM_FIELD_TYPE_SCENE));
+        travelPlanVO.setSeason(TravelResourceItemVO.getStringFromCode(travelPlan.getSeason(), RecommendationConstant.TRAVEL_RESOURCE_ITEM_FIELD_TYPE_SEASON));
+        travelPlanVO.setSuitAge(TravelResourceItemVO.getStringFromCode(travelPlan.getSuitAge(), RecommendationConstant.TRAVEL_RESOURCE_ITEM_FIELD_TYPE_SUITAGE));
+        travelPlanVO.setCategory(TravelResourceItemVO.getStringFromCode(travelPlan.getCategory(), RecommendationConstant.TRAVEL_RESOURCE_ITEM_FIELD_TYPE_CATEGORY));
         fillTravelPlanDetailMap(travelPlanVO);
-        calPriceAndCost(travelPlanVO);
         travelPlanVO.setAlreadyExisted(alreadyExisted);
         return travelPlanVO;
     }
 
     /**
      * calculate price and cost of travel_plan by adding the price and cost of its items one by one.
-     * @param travelPlanVO
+     * @param travelPlan
      * @return
      */
-    private TravelPlanVO calPriceAndCost(TravelPlanVO travelPlanVO){
+    @Override
+    public TravelPlan calPriceAndCost(TravelPlan travelPlan){
         int price,cost;
         price = cost = 0;
-        for(Integer bindingItemId : travelPlanVO.getTravelSiteBindingItemIds()){
+        for(Integer bindingItemId : JSON.parseArray(travelPlan.getTravelSiteBindingItemIds(), Integer.class)){
             TravelSiteBindingItemTemp travelSiteBindingItem = bindingTempRepository.findOne(bindingItemId);
             List<Integer> travelResourceItems = JSON.parseArray(travelSiteBindingItem.getTravelResourceItemIds(), Integer.class);
             for(Integer travelResourceItemId : travelResourceItems){
@@ -135,9 +142,9 @@ public class TravelResourceServiceImpl implements TravelResourceService {
                 cost += travelResourceItem.getCost();
             }
         }
-        travelPlanVO.setPrice(price);
-        travelPlanVO.setCost(cost);
-        return travelPlanVO;
+        travelPlan.setPrice(price);
+        travelPlan.setCost(cost);
+        return travelPlan;
     }
 
     private TravelPlanVO fillTravelPlanDetailMap(TravelPlanVO travelPlanVO){
@@ -145,10 +152,12 @@ public class TravelResourceServiceImpl implements TravelResourceService {
         List<Integer> travelSiteIds = travelPlanVO.getTravelSiteIds();
         List<Integer> bindingItemIds = travelPlanVO.getTravelSiteBindingItemIds();
         Assert.isTrue(travelSiteIds.size() == bindingItemIds.size(), "travelSiteIds size doesn't equal bindingItemIds");
+        String route = "";
         for(int i = 0; i < travelSiteIds.size(); i++){
             Integer travelSiteId = travelSiteIds.get(i);
             Integer bindingItemId = bindingItemIds.get(i);
             TravelSite travelSite = travelSiteRepository.findOne(travelSiteId);
+            route += travelSite.getSiteName()+"-";
             TravelSiteBindingItemTemp travelSiteBindingItemTemp = bindingTempRepository.findOne(bindingItemId);
             List<Integer> travelResourceItemIds = JSON.parseArray(travelSiteBindingItemTemp.getTravelResourceItemIds(), Integer.class);
             //find TravelResourceItem from db, and insert it into the travelResourceItemList
@@ -161,6 +170,7 @@ public class TravelResourceServiceImpl implements TravelResourceService {
             travelPlanDetialItem.setTravelResourceItemList(travelResourceItemList);
             travelSiteAndTravelResourceItemLists.add(travelPlanDetialItem);
         }
+        travelPlanVO.setRoute(route.substring(0,route.length()-1));
         travelPlanVO.setTravelSiteAndTravelResourceItemLists(travelSiteAndTravelResourceItemLists);
         return travelPlanVO;
     }

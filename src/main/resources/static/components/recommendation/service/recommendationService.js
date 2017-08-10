@@ -60,6 +60,19 @@ app.factory('recommendationService', ['$http', function($http){
         return tempTravelPlanStore;
     }
 
+    var _findTravelPlanByTags = function (params) {
+        var promise = $http({
+            method : 'POST',
+            url : '/recommendation/findTravelPlanByTags',
+            params : params
+        }).then(function(response) {
+            return response;
+        }, function errorCallback(response) {
+            notifyError(response);
+        });
+        return promise;
+    }
+
     recommendationService.putTempTravelPlan = _putTempTravelPlan;
     recommendationService.getTempTravelPlan = _getTempTravelPlan;
     recommendationService.getAllTravelSite = _getAllTravelSite;
@@ -67,5 +80,6 @@ app.factory('recommendationService', ['$http', function($http){
     recommendationService.putTravelResourceItems = _putTravelResourceItems;
     recommendationService.getTravelResourceItems = _getTravelResourceItems;
     recommendationService.buildTempTravelPlan = _buildTempTravelPlan;
+    recommendationService.findTravelPlanByTags = _findTravelPlanByTags;
 	return recommendationService;
 }]);

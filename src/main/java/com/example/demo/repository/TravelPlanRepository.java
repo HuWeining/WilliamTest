@@ -20,29 +20,30 @@ import javax.persistence.criteria.Predicate;
 public interface TravelPlanRepository extends CrudRepository<TravelPlan,Integer>, JpaSpecificationExecutor<TravelPlan>{
     List<TravelPlan> findByAreaAndSceneAndSeasonAndSuitAgeAndCategory(int area, int scene, int season, int suitAge, int category);
 
-    default List<TravelPlan> findTravelPlanByTags(int area, int scene, int season, int suitAge, int category) {
-        return findAll(buildTagsSpecification(area,scene,season,suitAge,category));
+    default List<TravelPlan> findTravelPlanByTags(int area, int scene, int season, int suitAge, int category, boolean alreadyExisted) {
+        return findAll(buildTagsSpecification(area,scene,season,suitAge,category, alreadyExisted));
     }
 
-    default Specification<TravelPlan> buildTagsSpecification(int area, int scene, int season, int suitAge, int category) {
+    default Specification<TravelPlan> buildTagsSpecification(int area, int scene, int season, int suitAge, int category, boolean alreadyExisted) {
         return new Specification<TravelPlan>() {
             public Predicate toPredicate(Root<TravelPlan> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 List<Predicate> predicates = new ArrayList<>();
                 if(area != 0){
-                    predicates.add(cb.equal(root.<String>get("AREA"),area));
+                    predicates.add(cb.equal(root.<Integer>get("area"),area));
                 }
                 if(scene != 0){
-                    predicates.add(cb.equal(root.<String>get("SCENE"),scene));
+                    predicates.add(cb.equal(root.<Integer>get("scene"),scene));
                 }
                 if(season != 0){
-                    predicates.add(cb.equal(root.<String>get("SEASON"),season));
+                    predicates.add(cb.equal(root.<Integer>get("season"),season));
                 }
                 if(suitAge != 0){
-                    predicates.add(cb.equal(root.<String>get("SUIT_AGE"),suitAge));
+                    predicates.add(cb.equal(root.<Integer>get("suitAge"),suitAge));
                 }
                 if(category != 0){
-                    predicates.add(cb.equal(root.<String>get("CATEGORY"),category));
+                    predicates.add(cb.equal(root.<Integer>get("category"),category));
                 }
+                predicates.add(cb.equal(root.<Boolean>get("alreadyExisted"),alreadyExisted));
                 return query.where(predicates.toArray(new Predicate[predicates.size()])).getRestriction();
             }
         };

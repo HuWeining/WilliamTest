@@ -25,4 +25,6 @@ public interface TravelResourceService {
     TravelResourceItemVO transformTravelResourceItemToTravelResourceItemVO(TravelResourceItem travelResourceItem);
 
     TravelPlanVO transformTravelPlanToTravelPlanVO(TravelPlan travelPlan, boolean alreadyExisted);
+
+    TravelPlan calPriceAndCost(TravelPlan travelPlan);
 }
