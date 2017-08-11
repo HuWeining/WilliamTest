@@ -13,14 +13,14 @@ app.config(function($controllerProvider) {
 
 app.config([ '$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider) {
 
-    $urlRouterProvider.otherwise('/login');
+    $urlRouterProvider.otherwise('/homePage');
     $stateProvider
 		.state('homePage',{
 			url: '/',
 			template: 'components/login/login.html',
 		})
 		.state('login', {
-			url: '/login',
+			url: '/homePage',
 			templateUrl: 'components/login/login.html',
 		})
         .state('guest', {

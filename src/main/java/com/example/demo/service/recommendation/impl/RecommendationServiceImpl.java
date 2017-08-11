@@ -17,10 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import javax.persistence.criteria.CriteriaBuilder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -148,10 +145,16 @@ public class RecommendationServiceImpl implements RecommendationService {
 
     @Override
     public List<TravelPlanVO> findTravelPlanByTags(Integer area, Integer scene, Integer season, Integer suitAge, Integer category, boolean alreadyExisted) {
-        List<TravelPlan> travelPlanList = travelPlanRepository.findTravelPlanByTags(area,scene,season,suitAge,category,alreadyExisted);
+//        List<TravelPlan> travelPlanList = travelPlanRepository.findTravelPlanByTags(area,scene,season,suitAge,category,alreadyExisted);
+        List<TravelPlan> allTravelPlanList = (ArrayList)travelPlanRepository.findByAlreadyExisted(alreadyExisted);
+        Set<Integer> idSetAlreadyContains = new HashSet<>();
+        List<TravelPlan> travelPlanList = filterTravelPlanListByTags(area,scene,season,suitAge,category,true,true,
+                true,true,true,allTravelPlanList,idSetAlreadyContains);
         List<TravelPlanVO> travelPlanVOList = travelPlanList.stream().map(travelPlan -> {
             //find travel plan for existed travel plan database
-            return travelResourceService.transformTravelPlanToTravelPlanVO(travelPlan,true);
+            TravelPlanVO travelPlanVO = travelResourceService.transformTravelPlanToTravelPlanVO(travelPlan,alreadyExisted);
+            travelPlanVO.setMatchDegree(1);
+            return travelPlanVO;
         }).collect(Collectors.toList());
 
         /**
@@ -166,7 +169,7 @@ public class RecommendationServiceImpl implements RecommendationService {
             RecommendationSorting.travelPlanSort(travelPlanVOList);
             travelPlanVOList = travelPlanVOList.subList(0, RecommendationConstant.DEFAULT_RECOMMENDATION_SIZE);
         }else {
-            List<TravelPlanVO> lessMatchTravelPlanVOList = getLessMatchTravelPlanList(area,scene,season,suitAge,category,alreadyExisted);
+            List<TravelPlanVO> lessMatchTravelPlanVOList = getLessMatchTravelPlanList(area,scene,season,suitAge,category,alreadyExisted,allTravelPlanList,idSetAlreadyContains);
             RecommendationSorting.travelPlanSort(lessMatchTravelPlanVOList);
             if(lessMatchTravelPlanVOList.size() < RecommendationConstant.DEFAULT_RECOMMENDATION_SIZE - travelPlanVOList.size()){
                 travelPlanVOList.addAll(lessMatchTravelPlanVOList);
@@ -175,6 +178,33 @@ public class RecommendationServiceImpl implements RecommendationService {
             }
         }
         return travelPlanVOList;
+    }
+
+    private List<TravelPlan> filterTravelPlanListByTags(Integer area, Integer scene, Integer season, Integer suitAge, Integer category,
+                                                        Boolean filterArea, Boolean filterScene, Boolean filterSeason, Boolean filterSuitAge, Boolean filterCategory,
+                                                        List<TravelPlan> allTravelPlanList, Set<Integer> idSetAlreadyContains){
+        List<TravelPlan> travelPlanList = allTravelPlanList.stream().filter(travelPlan -> {
+            if(idSetAlreadyContains.contains(travelPlan.getId()))
+                return false;
+            if(filterArea && area != 0 && !((area & travelPlan.getArea()) == area)){
+                return false;
+            }
+            if(filterScene && scene != 0 && !((scene & travelPlan.getScene()) == scene)){
+                return false;
+            }
+            if(filterSeason && season != 0 && !((season & travelPlan.getSeason()) == season)){
+                return false;
+            }
+            if(filterSuitAge && suitAge != 0 && !((suitAge & travelPlan.getSuitAge()) == suitAge)){
+                return false;
+            }
+            if(filterCategory && category != 0 && !((category & travelPlan.getCategory()) == category)){
+                return false;
+            }
+            idSetAlreadyContains.add(travelPlan.getId());
+            return true;
+        }).collect(Collectors.toList());
+        return travelPlanList;
     }
 
     @Override
@@ -187,56 +217,29 @@ public class RecommendationServiceImpl implements RecommendationService {
         return travelResourceItemVOList;
     }
 
-//    @Deprecated
-//    private TravelPlanVO transformTravelPlanToTravelPlanVO(Integer newTravelPlanId, List<Integer> travelSiteIds,List<Integer> bindingItemIds){
-//        TravelPlanVO travelPlanVO = new TravelPlanVO();
-//        travelPlanVO.setId(newTravelPlanId);
-//        travelPlanVO.setTravelSiteIds(travelSiteIds);
-//        travelPlanVO.setTravelSiteBindingItemIds(bindingItemIds);
-//        fillTravelPlanDetailMap(travelPlanVO);
-//        return travelPlanVO;
-//    }
-
-//    private TravelResourceItemVO transformTravelResourceItemToTravelResourceItemVO(TravelResourceItem travelResourceItem){
-//        TravelResourceItemVO travelResourceItemVO = new TravelResourceItemVO();
-//        travelResourceItemVO.setId(travelResourceItem.getId());
-//        travelResourceItemVO.setName(travelResourceItem.getName());
-//        travelResourceItemVO.setDescription(travelResourceItem.getDescription());
-//        travelResourceItemVO.setCost(travelResourceItem.getCost());
-//        travelResourceItemVO.setPrice(travelResourceItem.getPrice());
-//        travelResourceItemVO.setTravelSiteId(travelResourceItem.getTravelSiteId());
-//        travelResourceItemVO.setArea(TravelResourceItemVO.getStringFromCode(travelResourceItem.getArea(),RecommendationConstant.TRAVEL_RESOURCE_ITEM_FIELD_TYPE_AREA));
-//        travelResourceItemVO.setScene(TravelResourceItemVO.getStringFromCode(travelResourceItem.getScene(),RecommendationConstant.TRAVEL_RESOURCE_ITEM_FIELD_TYPE_SCENE));
-//        travelResourceItemVO.setSeason(TravelResourceItemVO.getStringFromCode(travelResourceItem.getSeason(),RecommendationConstant.TRAVEL_RESOURCE_ITEM_FIELD_TYPE_SEASON));
-//        travelResourceItemVO.setSuitAge(TravelResourceItemVO.getStringFromCode(travelResourceItem.getSuitAge(),RecommendationConstant.TRAVEL_RESOURCE_ITEM_FIELD_TYPE_SUITAGE));
-//        travelResourceItemVO.setCategory(TravelResourceItemVO.getStringFromCode(travelResourceItem.getCategory(),RecommendationConstant.TRAVEL_RESOURCE_ITEM_FIELD_TYPE_CATEGORY));
-//        return travelResourceItemVO;
-//    }
-
-
-    private List<TravelPlanVO> getLessMatchTravelPlanList(Integer area, Integer scene, Integer season, Integer suitAge, Integer category, Boolean alreadyExisted){
+    private List<TravelPlanVO> getLessMatchTravelPlanList(Integer area, Integer scene, Integer season, Integer suitAge, Integer category, Boolean alreadyExisted, List<TravelPlan> allTravelPlanList, Set<Integer> idSetAlreadyContains){
         List<TravelPlan> lessMatchTravelPlanList = new ArrayList<>();
         if(area != 0){
-            lessMatchTravelPlanList.addAll(travelPlanRepository.findTravelPlanByTags(0,scene,season,suitAge,category,alreadyExisted));
+            lessMatchTravelPlanList.addAll(filterTravelPlanListByTags(area,scene,season,suitAge,category,false,true,true,true,true,allTravelPlanList,idSetAlreadyContains));
         }
         if(scene != 0){
-            lessMatchTravelPlanList.addAll(travelPlanRepository.findTravelPlanByTags(area,0,season,suitAge,category,alreadyExisted));
+            lessMatchTravelPlanList.addAll(filterTravelPlanListByTags(area,scene,season,suitAge,category,true,false,true,true,true,allTravelPlanList,idSetAlreadyContains));
         }
         if(season != 0){
-            lessMatchTravelPlanList.addAll(travelPlanRepository.findTravelPlanByTags(area,scene,0,suitAge,category,alreadyExisted));
+            lessMatchTravelPlanList.addAll(filterTravelPlanListByTags(area,scene,season,suitAge,category,true,true,false,true,true,allTravelPlanList,idSetAlreadyContains));
         }
         if(suitAge != 0){
-            lessMatchTravelPlanList.addAll(travelPlanRepository.findTravelPlanByTags(area,scene,season,0,category,alreadyExisted));
+            lessMatchTravelPlanList.addAll(filterTravelPlanListByTags(area,scene,season,suitAge,category,true,true,true,false,true,allTravelPlanList,idSetAlreadyContains));
         }
         if(category != 0){
-            lessMatchTravelPlanList.addAll(travelPlanRepository.findTravelPlanByTags(area,scene,season,suitAge,0,alreadyExisted));
+            lessMatchTravelPlanList.addAll(filterTravelPlanListByTags(area,scene,season,suitAge,category,true,true,true,true,false,allTravelPlanList,idSetAlreadyContains));
         }
         return lessMatchTravelPlanList.stream().map(travelPlan -> {
             //find travel plan for existed travel plan database
             TravelPlanVO travelPlanVO = travelResourceService.transformTravelPlanToTravelPlanVO(travelPlan,true);
             double count = getQueryCriteriaNumber(area, scene, season, suitAge, category);
-            travelPlanVO.setMatchDegree((count)/count+1);
-            return travelResourceService.transformTravelPlanToTravelPlanVO(travelPlan,true);
+            travelPlanVO.setMatchDegree((count-1)/count);
+            return travelPlanVO;
         }).collect(Collectors.toList());
     }
 
@@ -254,62 +257,4 @@ public class RecommendationServiceImpl implements RecommendationService {
             count++;
         return count;
     }
-
-
-//    private TravelPlanVO transformTravelPlanToTravelPlanVO(TravelPlan travelPlan, boolean alreadyExisted){
-//        TravelPlanVO travelPlanVO = new TravelPlanVO();
-//        List<Integer> travelSiteIds = JSON.parseArray(travelPlan.getTravelSiteIds(), Integer.class);
-//        List<Integer> travelSiteBindingItemIds = JSON.parseArray(travelPlan.getTravelSiteBindingItemIds(), Integer.class);
-//        travelPlanVO.setId(travelPlan.getId());
-//        travelPlanVO.setTravelSiteIds(travelSiteIds);
-//        travelPlanVO.setTravelSiteBindingItemIds(travelSiteBindingItemIds);
-//        fillTravelPlanDetailMap(travelPlanVO);
-//        calPriceAndCost(travelPlanVO);
-//        travelPlanVO.setAlreadyExisted(alreadyExisted);
-//        return travelPlanVO;
-//    }
-//
-//    /**
-//     * calculate price and cost of travel_plan by adding the price and cost of its items one by one.
-//     * @param travelPlanVO
-//     * @return
-//     */
-//    private TravelPlanVO calPriceAndCost(TravelPlanVO travelPlanVO){
-//        int price,cost;
-//        price = cost = 0;
-//        for(Integer bindingItemId : travelPlanVO.getTravelSiteBindingItemIds()){
-//            TravelSiteBindingItem travelSiteBindingItem = bindingRepository.findOne(bindingItemId);
-//            List<Integer> travelResourceItems = JSON.parseArray(travelSiteBindingItem.getTravelResourceItemIds(), Integer.class);
-//            for(Integer travelResourceItemId : travelResourceItems){
-//                TravelResourceItem travelResourceItem = travelResourceItemRepository.findOne(travelResourceItemId);
-//                price += travelResourceItem.getPrice();
-//                cost += travelResourceItem.getCost();
-//            }
-//        }
-//        travelPlanVO.setPrice(price);
-//        travelPlanVO.setCost(cost);
-//        return travelPlanVO;
-//    }
-//
-//    private TravelPlanVO fillTravelPlanDetailMap(TravelPlanVO travelPlanVO){
-//        Map<TravelSite, List<TravelResourceItem>> detailTravelPlanMap = new HashMap<>();
-//        List<Integer> travelSiteIds = travelPlanVO.getTravelSiteIds();
-//        List<Integer> bindingItemIds = travelPlanVO.getTravelSiteBindingItemIds();
-//        Assert.isTrue(travelSiteIds.size() == bindingItemIds.size(), "travelSiteIds size doesn't equal bindingItemIds");
-//        for(int i = 0; i < travelSiteIds.size(); i++){
-//            Integer travelSiteId = travelSiteIds.get(i);
-//            Integer bindingItemId = bindingItemIds.get(i);
-//            TravelSite travelSite = travelSiteRepository.findOne(travelSiteId);
-//            TravelSiteBindingItemTemp travelSiteBindingItemTemp = bindingTempRepository.findOne(bindingItemId);
-//            List<Integer> travelResourceItemIds = JSON.parseArray(travelSiteBindingItemTemp.getTravelResourceItemIds(), Integer.class);
-//            //find TravelResourceItem from db, and insert it into the travelResourceItemList
-//            List<TravelResourceItem> travelResourceItemList = new ArrayList<>();
-//            for(Integer travelResourceItemId : travelResourceItemIds){
-//                travelResourceItemList.add(travelResourceItemRepository.findOne(travelResourceItemId));
-//            }
-//            detailTravelPlanMap.put(travelSite,travelResourceItemList);
-//        }
-//        travelPlanVO.setDetailTravelPlanMap(detailTravelPlanMap);
-//        return travelPlanVO;
-//    }
 }

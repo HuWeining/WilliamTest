@@ -55,24 +55,4 @@ public class TravelResourceController extends BaseController{
         }
         return this.returnSuccessMsg(travelResourceItemVOListTotal);
     }
-
-//    @RequestMapping(value = "/buildTempTravelPlan", method = RequestMethod.POST)
-//    @ResponseBody
-//    public ResponseEntity buildTempTravelPlan(List<TravelSiteVO> routeAndItems){
-//        TravelPlanVO travelPlanVO = recommendationService.buildTempTravelPlan(routeAndItems);
-//        return this.returnSuccessMsg(travelPlanVO);
-//
-//    }
-//
-//    @RequestMapping(value = "/findTravelResourceItemByTravelSiteId")
-//    public ResponseEntity findTravelResourceItemByTravelSiteId(int travelSiteId){
-//        return this.returnSuccessMsg(recommendationService.findTravelResourceItemByTravelSiteId(travelSiteId));
-//    }
-//
-//    @RequestMapping(value = "/test3")
-//    public String test3(){
-//        return "components/homePage";
-//    }
-
-
 }

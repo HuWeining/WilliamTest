@@ -22,9 +22,8 @@ app.controller('buildPlanProcessCtrl', [ '$scope', 'recommendationService','$sto
             if(res !== undefined){
                 if (res.status === 200 && res.data.success){
                     $scope.tempTravelPlan = res.data.data;
-                    // notify($scope.tempTravelPlan, 'success', false);
                     recommendationService.putTempTravelPlan($scope.tempTravelPlan);
-                    openMachineDetailModel();
+                    openTravelProductetailModel();
                 }else {
                     notify("Get binding travel resource item unsuccessfully",'danger', true);
                 }
@@ -32,7 +31,7 @@ app.controller('buildPlanProcessCtrl', [ '$scope', 'recommendationService','$sto
         });
     };
 
-    openMachineDetailModel = function() {
+    openTravelProductetailModel = function() {
         var uibModalInstance = $uibModal.open({
             templateUrl : 'components/recommendation/buildPlanDetail.html',
             controller : 'buildPlanDetailCtrl',

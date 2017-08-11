@@ -1,109 +1,118 @@
 <style type="text/css">
     div2 {display: inline}
 </style>
-<div2 ng-controller="findTravelPlanByTagsCtrl" ng-init="init()" style="padding-left: 40px;padding-right: 80px">
-    <div2 style="padding-left: 5px;padding-right: 5px">
-        <h3>  Search Travel Plan</h3>
-        <h4>    Area tags</h4>
+<div ng-controller="findTravelPlanByTagsCtrl" ng-init="init()" >
+    <div style="padding-left: 200px; padding-right: 200px">
         <div2>
-            <div2 ng-repeat="area in areas">
-                <label>
-                    <input type="checkbox" ng-checked="isCheckedArea(area.id)"
-                           ng-click="updateSelectionArea($event,area.id)" />{{area.name}}
-                </label>
-
+            <h3>Search Travel Plan</h3>
+            <h4>Area tags</h4>
+            <div2>
+                <div2 ng-repeat="area in areas">
+                        <input type="checkbox" ng-checked="isCheckedArea(area.id)"
+                               ng-click="updateSelectionArea($event,area.id)" />{{area.name}}
+                </div2>
             </div2>
-        </div2>
-        <h4>    Scene tags</h4>
-        <div2 ng-repeat="scene in scenes">
-            <span style="display:inline-block">
+            <h4>Scene tags</h4>
+            <div2 ng-repeat="scene in scenes">
                 <input type="checkbox" ng-checked="isCheckedScene(scene.id)"
-                                   ng-click="updateSelectionScene($event,scene.id)" />{{scene.name}}
-            </span>
-        </div2>
+                       ng-click="updateSelectionScene($event,scene.id)" />{{scene.name}}
+            </div2>
 
-        <h4>    Season tags</h4>
-        <div2>
-            <div2 ng-repeat="season in seasons">
-                <label>
-                    <input type="checkbox" ng-checked="isCheckedSeason(season.id)"
-                           ng-click="updateSelectionSeason($event,season.id)" />{{season.name}}
-                </label>
+            <h4>Season tags</h4>
+            <div2>
+                <div2 ng-repeat="season in seasons">
+                        <input type="checkbox" ng-checked="isCheckedSeason(season.id)"
+                               ng-click="updateSelectionSeason($event,season.id)" />{{season.name}}
+                </div2>
             </div2>
-        </div2>
-        <h4>    SuitAge tags</h4>
-        <div2>
-            <div2 ng-repeat="suitAge in suitAges">
-                <label>
-                    <input type="checkbox" ng-checked="isCheckedSuitAge(suitAge.id)"
-                           ng-click="updateSelectionSuitAg($event,suitAge.id)" />{{suitAge.name}}
-                </label>
+            <h4>SuitAge tags</h4>
+            <div2>
+                <div2 ng-repeat="suitAge in suitAges">
+                        <input type="checkbox" ng-checked="isCheckedSuitAge(suitAge.id)"
+                               ng-click="updateSelectionSuitAge($event,suitAge.id)" />{{suitAge.name}}
+                </div2>
             </div2>
-        </div2>
-        <h4>    Category tags</h4>
-        <div2>
-            <div2 ng-repeat="category in categorys">
-                <label>
-                    <input type="checkbox" ng-checked="isCheckedCategory(category.id)"
-                           ng-click="updateSelectionCategory($event,category.id)" />{{category.name}}
-                </label>
+            <h4>Category tags</h4>
+            <div2>
+                <div2 ng-repeat="category in categorys">
+                        <input type="checkbox" ng-checked="isCheckedCategory(category.id)"
+                               ng-click="updateSelectionCategory($event,category.id)" />{{category.name}}
+                </div2>
             </div2>
+            <br>
+            <h4>Find Temporary Travel Product</h4>
+            <div2>
+                <input type="checkbox" ng-checked="isCheckedTemporary()"
+                       ng-click="updateSelectionTemporary($event)" />
+            </div2>
+            <br>
+            <div2 class="modal-footer">
+                <button class="btn btn-primary" type="button" ng-click="searchTravelPlan()">Search Travel Product</button>
+            </div2>
+            <!--<div2>-->
+                <!--{{selectedArea}}-->
+                <!--{{selectedScene}}-->
+                <!--{{selectedSeason}}-->
+                <!--{{selectedSuitAge}}-->
+                <!--{{selectedCategory}}-->
+            <!--</div2>-->
         </div2>
-        <div2 class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="searchTravelPlan()">Search Travel Product</button>
-        </div2>
-        <div2>
-            Selected : {{selectedArea}} {{selectedScene}}
-        </div2>
-    </div2>
-
-    <div class="modal-body" id="modal-body">
+    </div>
+    <div style="padding-left: 200px; padding-right: 200px">
+        <h3>Choose Travel Product</h3>
+        <h4>
+            The travel plan is ordering by "grade".<br>
+            The higher "grade" is, the more expected profit the travel product has.<br>
+            "Grade" is calculated with many factors like gross profit, popularity, acceptance, match degree, user judgement and so on.
+        </h4>
         <table ng-table="tableParams" class="table table-bordered table-hover table-condensed">
             <colgroup>
                 <col width="5%" />
                 <col width="10%" />
                 <col width="15%" />
-                <col width="15%" />
-                <col width="15%" />
-                <col width="15%" />
+                <col width="5%" />
+                <col width="5%" />
+                <col width="5%" />
                 <col width="15%" />
                 <col width="15%" />
                 <col width="15%" />
                 <col width="15%" />
                 <col width="15%" />
             </colgroup>
-            <h1>
-                Travel Assemble Process
-            </h1>
             <tr>
-                <th></th>
                 <th>Id</th>
                 <th>Name</th>
-                <th>Description</th>
+                <th>Match Degree</th>
+                <th>Grade</th>
+                <th>Route</th>
                 <th>Price</th>
                 <th>Cost</th>
-                <th>Travel Site Name</th>
                 <th>AREA</th>
                 <th>SCENE</th>
-                <th>SEASON</th>
-                <th>SUIT AGE</th>
                 <th>CATEGORY</th>
-
+                <th>SUIT SEASON</th>
+                <th>SUIT AGE</th>
+                <th>Detail</th>
             </tr>
             <tr ng-repeat="row in travelPlans">
-                <td header="'headerCheckbox.html'"><input type="checkbox" ng-model="row.checked" /></td>
                 <td title="'id'"><span>{{row.id}}</span></td>
                 <td title="'name'" ><span>{{row.name}}</span></td>
-                <td title="'description'"><span>{{row.description}}</span></td>
-                <td title="'price'"><span>{{row.price}}</span></td>
-                <td title="'cost'"><span>{{row.cost}}</span></td>
-                <td title="'travelSiteName'"><span>{{row.travelSiteName}}</span></td>
-                <td title="'area'"><span>{{row.area}}</span></td>
-                <td title="'scene'"><span>{{row.scene}}</span></td>
-                <td title="'season'"><span>{{row.season}}</span></td>
-                <td title="'suitAge'"><span>{{row.suitAge}}</span></td>
-                <td title="'category'"><span>{{row.category}}</span></td>
+                <td title="'matchDegree'"><span>{{row.matchDegree| number:2}}</span></td>
+                <td title="'grade'"><span>{{row.grade| number:2}}</span></td>
+                <td title="'route'"><span>{{row.route}}</span></td>
+                <td title="'price'"><span>{{row.price| number:2}}</span></td>
+                <td title="'cost'"><span>{{row.cost| number:2}}</span></td>
+                <td title="'area contained'"><span>{{row.areaString}}</span></td>
+                <td title="'scene contained'"><span>{{row.sceneString}}</span></td>
+                <td title="'category contained'"><span>{{row.categoryString}}</span></td>
+                <td title="'suitable season'"><span>{{row.seasonString}}</span></td>
+                <td title="'suitable age'"><span>{{row.suitAgeString}}</span></td>
+                <td title="'suitable age'">
+                    <button class="pull-left btn btn-success" 	type="button" ng-click="openProductDetailModel(row)">
+                        <i class="fa fa-info">Travel Product Info</i>
+                    </button>
+                </td>
             </tr>
         </table>
     </div>
-</div2>
+</div>

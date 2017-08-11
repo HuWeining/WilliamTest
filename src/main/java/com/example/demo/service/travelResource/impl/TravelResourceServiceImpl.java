@@ -110,6 +110,7 @@ public class TravelResourceServiceImpl implements TravelResourceService {
         List<Integer> travelSiteIds = JSON.parseArray(travelPlan.getTravelSiteIds(), Integer.class);
         List<Integer> travelSiteBindingItemIds = JSON.parseArray(travelPlan.getTravelSiteBindingItemIds(), Integer.class);
         travelPlanVO.setId(travelPlan.getId());
+        travelPlanVO.setName(travelPlan.getName());
         travelPlanVO.setTravelSiteIds(travelSiteIds);
         travelPlanVO.setTravelSiteBindingItemIds(travelSiteBindingItemIds);
         travelPlanVO.setPrice(travelPlan.getPrice());

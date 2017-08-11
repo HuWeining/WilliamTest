@@ -20,6 +20,8 @@ import javax.persistence.criteria.Predicate;
 public interface TravelPlanRepository extends CrudRepository<TravelPlan,Integer>, JpaSpecificationExecutor<TravelPlan>{
     List<TravelPlan> findByAreaAndSceneAndSeasonAndSuitAgeAndCategory(int area, int scene, int season, int suitAge, int category);
 
+    List<TravelPlan> findByAlreadyExisted(boolean alreadyExisted);
+
     default List<TravelPlan> findTravelPlanByTags(int area, int scene, int season, int suitAge, int category, boolean alreadyExisted) {
         return findAll(buildTagsSpecification(area,scene,season,suitAge,category, alreadyExisted));
     }

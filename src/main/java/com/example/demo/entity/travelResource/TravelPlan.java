@@ -34,6 +34,15 @@ public class TravelPlan{
     @Column(name = "ALREADY_EXISTED")
     private Boolean alreadyExisted;
 
+    @Column(name = "POPULARITY")
+    private Double popularity;
+
+    @Column(name = "ACCEPTANCE")
+    private Double acceptance;
+
+    @Column(name = "USER_JUDGEMENT")
+    private Double userJudgement;
+
     /**
      * all the fields below are tags of the travel resource item, mainly serves for travel plan and tags search.
      * bit operation & is used to make a combined sign.
