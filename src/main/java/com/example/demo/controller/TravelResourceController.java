@@ -44,6 +44,13 @@ public class TravelResourceController extends BaseController{
         return this.returnSuccessMsg(travelPlanVOList);
     }
 
+    @RequestMapping(value = "/findAllTravelResourceItems")
+    @ResponseBody
+    public ResponseEntity findAllTravelResourceItems(){
+        List<TravelResourceItemVO> travelResourceItemVOList = travelResourceService.findAllTravelResourceItemVO();
+        return this.returnSuccessMsg(travelResourceItemVOList);
+    }
+
     @RequestMapping(value = "/findTravelResourceItemByTravelSiteId")
     @ResponseBody
     public ResponseEntity findTravelResourceItemByTravelSiteId(String travelSiteIdsJson){

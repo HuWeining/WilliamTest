@@ -4,6 +4,7 @@ import com.example.demo.entity.travelResource.TravelPlan;
 import com.example.demo.model.TravelPlanVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by huweining on 2017/8/5.
@@ -12,10 +13,11 @@ public class EvaluationSorting {
 
     public static double evaluationTravelPlan(TravelPlanVO travelPlanVO){
         int grossProfit = travelPlanVO.getPrice() - travelPlanVO.getCost();
-        double acceptance = 0.8;
-        double judgement = 0.8;
+        double acceptance = travelPlanVO.getAcceptance();
+        double userJudgement = travelPlanVO.getUserJudgement();
         double matchDegree = travelPlanVO.getMatchDegree();
-        double grade = grossProfit * acceptance * judgement * matchDegree;
+        double popularity = travelPlanVO.getPopularity();
+        double grade = grossProfit * acceptance * userJudgement * (matchDegree+0.5)/(matchDegree+1) * Math.log10(popularity*10);
         travelPlanVO.setGrade(grade);
         return grade;
         /**

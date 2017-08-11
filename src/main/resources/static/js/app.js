@@ -45,11 +45,15 @@ app.config([ '$urlRouterProvider', '$stateProvider', function($urlRouterProvider
         })
         .state('recommendation_buildPlanProcess', {
             url: '/recommendation/buildPlanProcess',
-            templateUrl: 'components/recommendation/buildPlanProcess.html',
+            templateUrl: 'components/recommendation/travelResourceItems.html',
         })
         .state('recommendation_buildPlanDetail', {
             url: '/recommendation/buildPlanDetail',
             templateUrl: 'components/recommendation/buildPlanDetail.html',
+        })
+        .state('recommendation_travelResourceItems', {
+            url: '/evaluation/travelResourceItems',
+            templateUrl: 'components/evaluation/travelResourceItems.html',
         })
 }]);
 

@@ -35,13 +35,13 @@ public class TravelPlan{
     private Boolean alreadyExisted;
 
     @Column(name = "POPULARITY")
-    private Double popularity;
+    private Double popularity = 1.0;
 
     @Column(name = "ACCEPTANCE")
-    private Double acceptance;
+    private Double acceptance = 0.8;
 
     @Column(name = "USER_JUDGEMENT")
-    private Double userJudgement;
+    private Double userJudgement = 0.8;
 
     /**
      * all the fields below are tags of the travel resource item, mainly serves for travel plan and tags search.
@@ -187,5 +187,29 @@ public class TravelPlan{
 
     public void setCategory(Integer category) {
         this.category = category;
+    }
+
+    public Double getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(Double popularity) {
+        this.popularity = popularity;
+    }
+
+    public Double getAcceptance() {
+        return acceptance;
+    }
+
+    public void setAcceptance(Double acceptance) {
+        this.acceptance = acceptance;
+    }
+
+    public Double getUserJudgement() {
+        return userJudgement;
+    }
+
+    public void setUserJudgement(Double userJudgement) {
+        this.userJudgement = userJudgement;
     }
 }

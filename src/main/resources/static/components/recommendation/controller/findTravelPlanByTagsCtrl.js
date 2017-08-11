@@ -1,4 +1,4 @@
-app.controller('findTravelPlanByTagsCtrl', [ '$scope', 'recommendationService','$stomp', function($scope, recommendationService, $stomp) {
+app.controller('findTravelPlanByTagsCtrl', [ '$scope', 'recommendationService','$stomp','$uibModal', function($scope, recommendationService, $stomp,$uibModal) {
 
     $scope.areas = [
         {id : 1, name : 'Japen'},
@@ -131,11 +131,42 @@ app.controller('findTravelPlanByTagsCtrl', [ '$scope', 'recommendationService','
     } ;
 
     $scope.openProductDetailModel = function(row){
-        var details = row.travelSiteAndTravelResourceItemLists;
-        for (var i = 0; i < details.length; i++){
-            var travelSiteAndItem = details[i];
+        $scope.chosenPlan = row;
+        var uibModalInstance = $uibModal.open({
+            templateUrl : 'components/recommendation/planDetail.html',
+            controller : 'planDetailCtrl',
+            scope : $scope,
+            size : 'lg',
+            backdrop : true,
+            dialogFade : true,
+            backdropFade : false,
+            // resolve: {
+            //     items: function () {
+            //         $scope.plan = row;
+            //         return $scope.plan;
+            //     }
+            // }
+        });
 
-        }
+    } ;
+
+    $scope.openPromotionDetailModel = function(row){
+        $scope.chosenPlan = row;
+        var uibModalInstance = $uibModal.open({
+            templateUrl : 'components/recommendation/promotionDetail.html',
+            controller : 'promotionDetailCtrl',
+            scope : $scope,
+            size : 'lg',
+            backdrop : true,
+            dialogFade : true,
+            backdropFade : false,
+            // resolve: {
+            //     items: function () {
+            //         $scope.plan = row;
+            //         return $scope.plan;
+            //     }
+            // }
+        });
 
     } ;
 

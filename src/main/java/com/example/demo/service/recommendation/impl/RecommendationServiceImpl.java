@@ -165,8 +165,8 @@ public class RecommendationServiceImpl implements RecommendationService {
          *     then do the grading and sort.
          * return travelPlanVOList(size <= 10)
          */
+        RecommendationSorting.travelPlanSort(travelPlanVOList);
         if(travelPlanVOList.size() >= RecommendationConstant.DEFAULT_RECOMMENDATION_SIZE){
-            RecommendationSorting.travelPlanSort(travelPlanVOList);
             travelPlanVOList = travelPlanVOList.subList(0, RecommendationConstant.DEFAULT_RECOMMENDATION_SIZE);
         }else {
             List<TravelPlanVO> lessMatchTravelPlanVOList = getLessMatchTravelPlanList(area,scene,season,suitAge,category,alreadyExisted,allTravelPlanList,idSetAlreadyContains);

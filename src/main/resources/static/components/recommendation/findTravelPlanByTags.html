@@ -78,6 +78,7 @@
                 <col width="15%" />
                 <col width="15%" />
                 <col width="15%" />
+                <col width="15%" />
             </colgroup>
             <tr>
                 <th>Id</th>
@@ -93,6 +94,7 @@
                 <th>SUIT SEASON</th>
                 <th>SUIT AGE</th>
                 <th>Detail</th>
+                <th>Promotion</th>
             </tr>
             <tr ng-repeat="row in travelPlans">
                 <td title="'id'"><span>{{row.id}}</span></td>
@@ -110,6 +112,11 @@
                 <td title="'suitable age'">
                     <button class="pull-left btn btn-success" 	type="button" ng-click="openProductDetailModel(row)">
                         <i class="fa fa-info">Travel Product Info</i>
+                    </button>
+                </td>
+                <td title="'suitable age'">
+                    <button class="pull-left btn btn-success" 	type="button" ng-click="openPromotionDetailModel(row)">
+                        <i class="fa fa-info">Promotion</i>
                     </button>
                 </td>
             </tr>

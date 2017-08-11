@@ -36,6 +36,11 @@ public class RecommendationController extends BaseController{
     @ResponseBody
     public ResponseEntity findTravelPlanByTags(Integer area, Integer scene, Integer season, Integer suitAge, Integer category, Boolean alreadyExisted){
         List<TravelPlanVO> travelPlanVOList = recommendationService.findTravelPlanByTags(area, scene, season, suitAge, category, alreadyExisted);
+        travelPlanVOList.stream().forEach(
+                travelPlanVO -> {
+                    travelPlanVO.setGrade(EvaluationSorting.evaluationTravelPlan(travelPlanVO));
+                }
+        );
         return this.returnSuccessMsg(travelPlanVOList);
     }
 

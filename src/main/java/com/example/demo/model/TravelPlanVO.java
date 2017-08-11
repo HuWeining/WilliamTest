@@ -5,6 +5,7 @@ import com.example.demo.entity.travelResource.TravelResourceItem;
 import com.example.demo.entity.travelResource.TravelSite;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.Column;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,8 @@ public class TravelPlanVO{
 
     private List<TravelSiteAndTravelResourceItemList> travelSiteAndTravelResourceItemLists;
 
+    private List<TravelSiteAndTravelResourceItemList> promotionItemLists;
+
     private Integer cost;
 
     private Integer price;
@@ -31,6 +34,11 @@ public class TravelPlanVO{
 
     private String route;
 
+    private Double popularity;
+
+    private Double acceptance;
+
+    private Double userJudgement;
     /**
      * matchDegree default value = 1
      */
@@ -168,23 +176,23 @@ public class TravelPlanVO{
     }
 
     public static class TravelSiteAndTravelResourceItemList{
-        TravelSite travelSite;
-        List<TravelResourceItem> travelResourceItemList;
+        TravelSiteVO travelSiteVO;
+        List<TravelResourceItemVO> travelResourceItemVOList;
 
-        public TravelSite getTravelSite() {
-            return travelSite;
+        public TravelSiteVO getTravelSiteVO() {
+            return travelSiteVO;
         }
 
-        public void setTravelSite(TravelSite travelSite) {
-            this.travelSite = travelSite;
+        public void setTravelSiteVO(TravelSiteVO travelSiteVO) {
+            this.travelSiteVO = travelSiteVO;
         }
 
-        public List<TravelResourceItem> getTravelResourceItemList() {
-            return travelResourceItemList;
+        public List<TravelResourceItemVO> getTravelResourceItemVOList() {
+            return travelResourceItemVOList;
         }
 
-        public void setTravelResourceItemList(List<TravelResourceItem> travelResourceItemList) {
-            this.travelResourceItemList = travelResourceItemList;
+        public void setTravelResourceItemVOList(List<TravelResourceItemVO> travelResourceItemVOList) {
+            this.travelResourceItemVOList = travelResourceItemVOList;
         }
     }
 
@@ -226,5 +234,37 @@ public class TravelPlanVO{
 
     public void setCategory(List<String> category) {
         this.category = category;
+    }
+
+    public List<TravelSiteAndTravelResourceItemList> getPromotionItemLists() {
+        return promotionItemLists;
+    }
+
+    public void setPromotionItemLists(List<TravelSiteAndTravelResourceItemList> promotionItemLists) {
+        this.promotionItemLists = promotionItemLists;
+    }
+
+    public Double getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(Double popularity) {
+        this.popularity = popularity;
+    }
+
+    public Double getAcceptance() {
+        return acceptance;
+    }
+
+    public void setAcceptance(Double acceptance) {
+        this.acceptance = acceptance;
+    }
+
+    public Double getUserJudgement() {
+        return userJudgement;
+    }
+
+    public void setUserJudgement(Double userJudgement) {
+        this.userJudgement = userJudgement;
     }
 }

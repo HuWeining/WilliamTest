@@ -20,6 +20,8 @@ public interface TravelResourceService {
 
     List<TravelResourceItemVO> findTravelResourceItemVOByTravelSiteId(int travelSiteId);
 
+    List<TravelResourceItemVO> findAllTravelResourceItemVO();
+
     TravelSiteVO transformTravelSiteToTravelSiteVO(TravelSite travelSite);
 
     TravelResourceItemVO transformTravelResourceItemToTravelResourceItemVO(TravelResourceItem travelResourceItem);

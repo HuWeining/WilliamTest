@@ -72,6 +72,15 @@ public class TravelResourceServiceImpl implements TravelResourceService {
     }
 
     @Override
+    public List<TravelResourceItemVO> findAllTravelResourceItemVO() {
+        return  ((ArrayList<TravelResourceItem>)travelResourceItemRepository.findAll()).stream().map(
+                travelResourceItem -> {
+                    return transformTravelResourceItemToTravelResourceItemVO(travelResourceItem);
+                }
+        ).collect(Collectors.toList());
+    }
+
+    @Override
     public TravelSiteVO transformTravelSiteToTravelSiteVO(TravelSite travelSite) {
         TravelSiteVO travelSiteVO = new TravelSiteVO();
         travelSiteVO.setId(travelSite.getId());
@@ -115,12 +124,16 @@ public class TravelResourceServiceImpl implements TravelResourceService {
         travelPlanVO.setTravelSiteBindingItemIds(travelSiteBindingItemIds);
         travelPlanVO.setPrice(travelPlan.getPrice());
         travelPlanVO.setCost(travelPlan.getCost());
+        travelPlanVO.setAcceptance(travelPlan.getAcceptance());
+        travelPlanVO.setPopularity(travelPlan.getPopularity());
+        travelPlanVO.setUserJudgement(travelPlan.getUserJudgement());
         travelPlanVO.setArea(TravelResourceItemVO.getStringFromCode(travelPlan.getArea(), RecommendationConstant.TRAVEL_RESOURCE_ITEM_FIELD_TYPE_AREA));
         travelPlanVO.setScene(TravelResourceItemVO.getStringFromCode(travelPlan.getScene(), RecommendationConstant.TRAVEL_RESOURCE_ITEM_FIELD_TYPE_SCENE));
         travelPlanVO.setSeason(TravelResourceItemVO.getStringFromCode(travelPlan.getSeason(), RecommendationConstant.TRAVEL_RESOURCE_ITEM_FIELD_TYPE_SEASON));
         travelPlanVO.setSuitAge(TravelResourceItemVO.getStringFromCode(travelPlan.getSuitAge(), RecommendationConstant.TRAVEL_RESOURCE_ITEM_FIELD_TYPE_SUITAGE));
         travelPlanVO.setCategory(TravelResourceItemVO.getStringFromCode(travelPlan.getCategory(), RecommendationConstant.TRAVEL_RESOURCE_ITEM_FIELD_TYPE_CATEGORY));
         fillTravelPlanDetailMap(travelPlanVO);
+        fillPromotionList(travelPlanVO);
         travelPlanVO.setAlreadyExisted(alreadyExisted);
         return travelPlanVO;
     }
@@ -148,6 +161,34 @@ public class TravelResourceServiceImpl implements TravelResourceService {
         return travelPlan;
     }
 
+    private TravelPlanVO fillPromotionList(TravelPlanVO travelPlanVO) {
+        List<TravelPlanVO.TravelSiteAndTravelResourceItemList> promotionItemLists = new ArrayList<>();
+        List<Integer> travelSiteIds = travelPlanVO.getTravelSiteIds();
+        List<Integer> bindingItemIds = travelPlanVO.getTravelSiteBindingItemIds();
+        for (int i = 0; i < travelSiteIds.size(); i++) {
+            Integer travelSiteId = travelSiteIds.get(i);
+            Integer bindingItemId = bindingItemIds.get(i);
+            TravelSite travelSite = travelSiteRepository.findOne(travelSiteId);
+            TravelSiteBindingItemTemp travelSiteBindingItemTemp = bindingTempRepository.findOne(bindingItemId);
+            List<Integer> travelResourceBindingItemIds = JSON.parseArray(travelSiteBindingItemTemp.getTravelResourceItemIds(), Integer.class);
+            List<Integer> travelResourceItemIds = JSON.parseArray(travelSiteBindingItemTemp.getTravelResourceItemIds(), Integer.class);
+            Set<Integer> travelResourceBindingItemIdSet = new HashSet<>(travelResourceBindingItemIds);
+            List<TravelResourceItemVO> travelResourceItemVOList = findTravelResourceItemVOByTravelSiteId(travelSiteId);
+            List<TravelResourceItemVO> promotionItemList = new ArrayList<>();
+            for (TravelResourceItemVO travelResourceItemVO : travelResourceItemVOList) {
+                if (!travelResourceBindingItemIdSet.contains(travelResourceItemVO.getId())) {
+                    promotionItemList.add(travelResourceItemVO);
+                }
+            }
+            TravelPlanVO.TravelSiteAndTravelResourceItemList travelPlanDetailItem = new TravelPlanVO.TravelSiteAndTravelResourceItemList();
+            travelPlanDetailItem.setTravelSiteVO(transformTravelSiteToTravelSiteVO(travelSite));
+            travelPlanDetailItem.setTravelResourceItemVOList(promotionItemList);
+            promotionItemLists.add(travelPlanDetailItem);
+        }
+        travelPlanVO.setPromotionItemLists(promotionItemLists);
+        return travelPlanVO;
+    }
+
     private TravelPlanVO fillTravelPlanDetailMap(TravelPlanVO travelPlanVO){
         List<TravelPlanVO.TravelSiteAndTravelResourceItemList> travelSiteAndTravelResourceItemLists = new ArrayList<>();
         List<Integer> travelSiteIds = travelPlanVO.getTravelSiteIds();
@@ -166,10 +207,12 @@ public class TravelResourceServiceImpl implements TravelResourceService {
             for(Integer travelResourceItemId : travelResourceItemIds){
                 travelResourceItemList.add(travelResourceItemRepository.findOne(travelResourceItemId));
             }
-            TravelPlanVO.TravelSiteAndTravelResourceItemList travelPlanDetialItem = new TravelPlanVO.TravelSiteAndTravelResourceItemList();
-            travelPlanDetialItem.setTravelSite(travelSite);
-            travelPlanDetialItem.setTravelResourceItemList(travelResourceItemList);
-            travelSiteAndTravelResourceItemLists.add(travelPlanDetialItem);
+            TravelPlanVO.TravelSiteAndTravelResourceItemList travelPlanDetailItem = new TravelPlanVO.TravelSiteAndTravelResourceItemList();
+            travelPlanDetailItem.setTravelSiteVO(transformTravelSiteToTravelSiteVO(travelSite));
+            travelPlanDetailItem.setTravelResourceItemVOList(travelResourceItemList.stream().map(travelResourceItem -> {
+                return transformTravelResourceItemToTravelResourceItemVO(travelResourceItem);
+            }).collect(Collectors.toList()));
+            travelSiteAndTravelResourceItemLists.add(travelPlanDetailItem);
         }
         travelPlanVO.setRoute(route.substring(0,route.length()-1));
         travelPlanVO.setTravelSiteAndTravelResourceItemLists(travelSiteAndTravelResourceItemLists);

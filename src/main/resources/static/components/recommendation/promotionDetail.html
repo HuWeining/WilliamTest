@@ -1,0 +1,26 @@
+<div>
+<div class="modal-header">
+        <h1 class="modal-title" id="modal-title">Promotion Travel Resource Item List</h1>
+    </div>
+    <div class="modal-body" ng-repeat="travelSiteAndTravelResourceItem in chosenPlan.promotionItemLists">
+        <h3>Travel Site {{travelSiteAndTravelResourceItem.travelSiteVO.siteName}} </h3>
+        <div ng-repeat = "travelResourceItem in travelSiteAndTravelResourceItem.travelResourceItemVOList">
+            <h4>Resource Name: {{travelResourceItem.name}}</h4>
+            <h4>Price: {{travelResourceItem.price}}
+                Cost:{{travelResourceItem.cost}}
+                Description:{{travelResourceItem.description}}</h4>
+            <h4>Area:{{travelResourceItem.areaString}}</h4>
+            <h4>Scene:{{travelResourceItem.sceneString}}</h4>
+            <h4>Season:{{travelResourceItem.seasonString}}</h4>
+            <h4>SuitAge:{{travelResourceItem.suitAgeString}}</h4>
+            <h4>Category:{{travelResourceItem.categoryString}}</h4>
+            <br>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+    <div>
+        <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+    </div>
+</div>
