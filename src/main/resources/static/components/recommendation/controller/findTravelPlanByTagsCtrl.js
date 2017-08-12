@@ -74,6 +74,9 @@ app.controller('findTravelPlanByTagsCtrl', [ '$scope', 'recommendationService','
     setShowTags = function(travelPlans){
         for (var i = 0; i < travelPlans.length; i++){
             var travelPlan = travelPlans[i];
+            if(travelPlan.matchDegree != 1){
+                travelPlan.name = "[NOT MATCH]" + travelPlan.name;
+            }
             var area = "";
             var scene = "";
             var season = "";
