@@ -1,11 +1,11 @@
-<div ng-controller="buildTempTravelPlanCtrl" ng-init="init()" style="padding-left: 40px;padding-right: 80px">
+<div ng-controller="buildTempTravelPlanCtrl" ng-init="init()" style="padding-left: 400px;padding-right: 400px">
     <br>
-    <h3>Choose travel sites:</h3>
+    <h3>Travel sites:</h3>
     <br>
     <div>
         <button class="pull-left btn btn-success" type="button" style="width: 200px; padding: 2px 2px;"
                 ng-click="openTravelPlanBuildBox()" title="buildTravelPlan">
-            Check
+            Choose travel Site
         </button>
     </div>
     <table ng-table="tableParams" class="table table-bordered table-hover table-condensed">
@@ -27,8 +27,5 @@
             <td title="'area'" sortable="'area'"><span>{{row.area}}</span></td>
             <td title="'siteName'" sortable="'siteName'"><span>{{row.siteName}}</span></td>
         </tr>
-        <!--<div>Select Travel Site : {{selectData}}</div>-->
-        <!--<div>Select Travel selectTravelSiteIds : {{travelSiteIds}}</div>-->
-        <!--<div>Select Travel Resource : {{travelResourceItem}}</div>-->
     </table>
 </div>
