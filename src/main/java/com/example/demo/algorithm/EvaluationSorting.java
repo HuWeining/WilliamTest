@@ -2,6 +2,7 @@ package com.example.demo.algorithm;
 
 import com.example.demo.entity.travelResource.TravelPlan;
 import com.example.demo.model.TravelPlanVO;
+import com.example.demo.model.TravelResourceItemVO;
 
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,24 @@ public class EvaluationSorting {
         double popularity = travelPlanVO.getPopularity();
         double grade = grossProfit * acceptance * userJudgement * (matchDegree+0.5)/(matchDegree+1) * Math.log10(popularity*10);
         travelPlanVO.setGrade(grade);
+        return grade;
+        /**
+         * if travel_plan is already existed,
+         *     search the acceptance and judgement by travel_plan
+         * else
+         *     choose the lowest acceptance and judgement of travel_plan's travel_resource_item
+         */
+
+
+    }
+
+    public static double evaluationTravelResource(TravelResourceItemVO travelResourceItemVO){
+        int grossProfit = travelResourceItemVO.getPrice() - travelResourceItemVO.getCost();
+        double acceptance = travelResourceItemVO.getAcceptance();
+        double userJudgement = travelResourceItemVO.getUserJudgement();
+        double popularity = travelResourceItemVO.getPopularity();
+        double grade = grossProfit * acceptance * userJudgement * Math.log10(popularity*10);
+        travelResourceItemVO.setGrade(grade);
         return grade;
         /**
          * if travel_plan is already existed,

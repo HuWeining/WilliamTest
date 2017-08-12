@@ -18,6 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.example.demo.algorithm.RecommendationSorting.travelResourceItemSort;
+
 /**
  * Created by huweining on 2017/6/13.
  */
@@ -48,6 +50,7 @@ public class TravelResourceController extends BaseController{
     @ResponseBody
     public ResponseEntity findAllTravelResourceItems(){
         List<TravelResourceItemVO> travelResourceItemVOList = travelResourceService.findAllTravelResourceItemVO();
+        travelResourceItemSort(travelResourceItemVOList);
         return this.returnSuccessMsg(travelResourceItemVOList);
     }
 

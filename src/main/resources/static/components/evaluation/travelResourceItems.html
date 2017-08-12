@@ -1,6 +1,9 @@
 <div ng-controller="travelResourceItemsCtrl" ng-init="init()" style="padding-left: 40px;padding-right: 80px">
     <div class="modal-header">
         <h3 class="modal-title" id="modal-title">Build travel plan with binding travel resource</h3>
+        <h4>
+            The evaluation grade is calculated with many factors like gross profit, popularity, acceptance, user judgement and so on.<br>
+        </h4>
     </div>
     <div class="modal-body" id="modal-body">
         <table ng-table="tableParams" class="table table-bordered table-hover table-condensed">
@@ -21,24 +24,32 @@
                 <th></th>
                 <th>Id</th>
                 <th>Name</th>
+                <th>Grade</th>
                 <th>Description</th>
                 <th>Price</th>
                 <th>Cost</th>
+                <th>Popularity Index</th>
+                <th>Acceptance Index</th>
+                <th>User Judgement</th>
                 <th>Travel Site Name</th>
-                <th>AREA</th>
-                <th>SCENE</th>
-                <th>SEASON</th>
-                <th>SUIT AGE</th>
-                <th>CATEGORY</th>
+                <th>Area</th>
+                <th>Scene</th>
+                <th>Category</th>
+                <th>Suit season</th>
+                <th>Suit age</th>
 
             </tr>
             <tr ng-repeat="row in travelResourceItem">
                 <td header="'headerCheckbox.html'"><input type="checkbox" ng-model="row.checked" /></td>
                 <td title="'id'"><span>{{row.id}}</span></td>
                 <td title="'name'" ><span>{{row.name}}</span></td>
+                <td title="'grade'"><span>{{row.grade| number:2}}</span></td>
                 <td title="'description'"><span>{{row.description}}</span></td>
                 <td title="'price'"><span>{{row.price}}</span></td>
                 <td title="'cost'"><span>{{row.cost}}</span></td>
+                <td title="'popularity'"><span>{{row.popularity| number:2}}</span></td>
+                <td title="'acceptance'"><span>{{row.acceptance| number:2}}</span></td>
+                <td title="'userJudgement'"><span>{{row.userJudgement| number:2}}</span></td>
                 <td title="'travelSiteName'"><span>{{row.travelSiteName}}</span></td>
                 <td title="'area'"><span>{{row.areaString}}</span></td>
                 <td title="'scene'"><span>{{row.sceneString}}</span></td>

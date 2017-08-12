@@ -31,6 +31,8 @@ public class TravelResourceItemVO {
 
     private Double userJudgement = 0.8;
 
+    private Double grade;
+
     /**
      * area 0000001, 0000010, 0000100, 0001000, 0010000, 0100000,   1000000 represent the area
      *       Japan,  SE Asia, China,   Europe, America, Australia, Africa  respectively.
@@ -185,6 +187,14 @@ public class TravelResourceItemVO {
 
     public void setUserJudgement(Double userJudgement) {
         this.userJudgement = userJudgement;
+    }
+
+    public Double getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Double grade) {
+        this.grade = grade;
     }
 
     public static List<String> getStringFromCode(int code, int type){
