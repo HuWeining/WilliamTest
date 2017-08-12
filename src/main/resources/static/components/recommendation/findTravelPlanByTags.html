@@ -73,6 +73,9 @@
                 <col width="5%" />
                 <col width="5%" />
                 <col width="5%" />
+                <col width="5%" />
+                <col width="5%" />
+                <col width="5%" />
                 <col width="15%" />
                 <col width="15%" />
                 <col width="15%" />
@@ -88,11 +91,14 @@
                 <th>Route</th>
                 <th>Price</th>
                 <th>Cost</th>
-                <th>AREA</th>
-                <th>SCENE</th>
-                <th>CATEGORY</th>
-                <th>SUIT SEASON</th>
-                <th>SUIT AGE</th>
+                <th>Popularity Index</th>
+                <th>Acceptance Index</th>
+                <th>User Judgement</th>
+                <th>Area</th>
+                <th>Scene</th>
+                <th>Category</th>
+                <th>Suit season</th>
+                <th>Suit age</th>
                 <th>Detail</th>
                 <th>Promotion</th>
             </tr>
@@ -104,6 +110,9 @@
                 <td title="'route'"><span>{{row.route}}</span></td>
                 <td title="'price'"><span>{{row.price| number:2}}</span></td>
                 <td title="'cost'"><span>{{row.cost| number:2}}</span></td>
+                <td title="'popularity'"><span>{{row.popularity| number:2}}</span></td>
+                <td title="'acceptance'"><span>{{row.acceptance| number:2}}</span></td>
+                <td title="'userJudgement'"><span>{{row.userJudgement| number:2}}</span></td>
                 <td title="'area contained'"><span>{{row.areaString}}</span></td>
                 <td title="'scene contained'"><span>{{row.sceneString}}</span></td>
                 <td title="'category contained'"><span>{{row.categoryString}}</span></td>

@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import com.example.demo.utilsAndConsants.RecommendationConstant;
 
+import javax.persistence.Column;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,12 @@ public class TravelResourceItemVO {
     private Integer travelSiteId;
 
     private String travelSiteName;
+
+    private Double popularity = 1.0;
+
+    private Double acceptance = 0.8;
+
+    private Double userJudgement = 0.8;
 
     /**
      * area 0000001, 0000010, 0000100, 0001000, 0010000, 0100000,   1000000 represent the area
@@ -154,6 +161,30 @@ public class TravelResourceItemVO {
 
     public void setCategory(List<String> category) {
         this.category = category;
+    }
+
+    public Double getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(Double popularity) {
+        this.popularity = popularity;
+    }
+
+    public Double getAcceptance() {
+        return acceptance;
+    }
+
+    public void setAcceptance(Double acceptance) {
+        this.acceptance = acceptance;
+    }
+
+    public Double getUserJudgement() {
+        return userJudgement;
+    }
+
+    public void setUserJudgement(Double userJudgement) {
+        this.userJudgement = userJudgement;
     }
 
     public static List<String> getStringFromCode(int code, int type){
